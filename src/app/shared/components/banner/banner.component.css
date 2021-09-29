@@ -1,0 +1,12 @@
+.banner{
+    background-image: url('src\assets\folk-pattern.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:200px;
+    font-size: 40px;
+    font-family: Brush Script MT;
+    width:100%;
+    margin:auto;
+    
+}
