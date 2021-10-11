@@ -21,7 +21,7 @@ import { NavbarComponent } from './unLoggedUser/components/navbar/navbar.compone
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { BannerComponent } from './shared/components/banner/banner.component';
 import { DepartmentsComponent } from './Admin/components/departments/departments.component';
-import { RaportsComponent } from './Admin/components/raports/raports.component';
+
 import { AdministratorsComponent } from './Admin/components/administrators/administrators.component';
 import { UsersComponent } from './AdminUnit/components/users/users.component';
 import { FacultiesComponent } from './AdminUnit/components/faculties/faculties.component';
@@ -34,6 +34,7 @@ import { MyThesesComponent } from './Supervisor/components/my-theses/my-theses.c
 import { TicketsComponent } from './Supervisor/components/tickets/tickets.component';
 import { ThesesListComponent } from './Candidate/components/theses-list/theses-list.component';
 import { ProponeThesisComponent } from './Candidate/components/propone-thesis/propone-thesis.component';
+import { ReportsAdminComponent } from './Admin/components/reports-admin/reports-admin.component';
 
 
 @NgModule({
@@ -46,7 +47,6 @@ import { ProponeThesisComponent } from './Candidate/components/propone-thesis/pr
     FooterComponent,
     BannerComponent,
     DepartmentsComponent,
-    RaportsComponent,
     AdministratorsComponent,
     UsersComponent,
     FacultiesComponent,
@@ -58,7 +58,8 @@ import { ProponeThesisComponent } from './Candidate/components/propone-thesis/pr
     MyThesesComponent,
     TicketsComponent,
     ThesesListComponent,
-    ProponeThesisComponent
+    ProponeThesisComponent,
+    ReportsAdminComponent
   ],
   imports: [
     BrowserModule,
