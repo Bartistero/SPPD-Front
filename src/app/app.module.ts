@@ -20,6 +20,20 @@ import { LoginPageComponent } from './unLoggedUser/components/login-page/login-p
 import { NavbarComponent } from './unLoggedUser/components/navbar/navbar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { BannerComponent } from './shared/components/banner/banner.component';
+import { DepartmentsComponent } from './Admin/components/departments/departments.component';
+import { RaportsComponent } from './Admin/components/raports/raports.component';
+import { AdministratorsComponent } from './Admin/components/administrators/administrators.component';
+import { UsersComponent } from './AdminUnit/components/users/users.component';
+import { FacultiesComponent } from './AdminUnit/components/faculties/faculties.component';
+import { ThesesComponent } from './AdminUnit/components/theses/theses.component';
+import { ReportsComponent } from './AdminUnit/components/reports/reports.component';
+import { BlockedAcountsComponent } from './AdminUnit/components/blocked-acounts/blocked-acounts.component';
+import { ApprovedThesesComponent } from './Supervisor/components/approved-theses/approved-theses.component';
+import { AddThesisComponent } from './Supervisor/components/add-thesis/add-thesis.component';
+import { MyThesesComponent } from './Supervisor/components/my-theses/my-theses.component';
+import { TicketsComponent } from './Supervisor/components/tickets/tickets.component';
+import { ThesesListComponent } from './Candidate/components/theses-list/theses-list.component';
+import { ProponeThesisComponent } from './Candidate/components/propone-thesis/propone-thesis.component';
 
 
 @NgModule({
@@ -30,7 +44,21 @@ import { BannerComponent } from './shared/components/banner/banner.component';
     LoginPageComponent,
     NavbarComponent,
     FooterComponent,
-    BannerComponent
+    BannerComponent,
+    DepartmentsComponent,
+    RaportsComponent,
+    AdministratorsComponent,
+    UsersComponent,
+    FacultiesComponent,
+    ThesesComponent,
+    ReportsComponent,
+    BlockedAcountsComponent,
+    ApprovedThesesComponent,
+    AddThesisComponent,
+    MyThesesComponent,
+    TicketsComponent,
+    ThesesListComponent,
+    ProponeThesisComponent
   ],
   imports: [
     BrowserModule,
