@@ -3,15 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './unLoggedUser/components/about/about.component';
@@ -35,6 +26,8 @@ import { TicketsComponent } from './Supervisor/components/tickets/tickets.compon
 import { ThesesListComponent } from './Candidate/components/theses-list/theses-list.component';
 import { ProponeThesisComponent } from './Candidate/components/propone-thesis/propone-thesis.component';
 import { ReportsAdminComponent } from './Admin/components/reports-admin/reports-admin.component';
+import { AdminModule } from './Admin/admin.module';
+import { SharedModule } from './shared/shared/shared.module';
 
 
 @NgModule({
@@ -46,49 +39,19 @@ import { ReportsAdminComponent } from './Admin/components/reports-admin/reports-
     NavbarComponent,
     FooterComponent,
     BannerComponent,
-    DepartmentsComponent,
-    AdministratorsComponent,
-    UsersComponent,
-    FacultiesComponent,
-    ThesesComponent,
-    ReportsComponent,
-    BlockedAcountsComponent,
-    ApprovedThesesComponent,
-    AddThesisComponent,
-    MyThesesComponent,
-    TicketsComponent,
-    ThesesListComponent,
-    ProponeThesisComponent,
-    ReportsAdminComponent
+    
+   
+   
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule
+    
+   
+    
   ],
   
   providers: [],

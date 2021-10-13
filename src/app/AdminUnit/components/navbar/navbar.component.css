@@ -1,0 +1,8 @@
+.spacer{
+    flex: 1 1 auto;
+}
+.router-link-active {
+	text-decoration: underline;
+    font-weight: bold;
+	
+}

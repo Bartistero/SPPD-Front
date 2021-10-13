@@ -6,21 +6,32 @@ import { TemplateComponent } from './components/template/template.component';
 import { AdministratorsComponent } from './components/administrators/administrators.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
 import { ReportsAdminComponent } from './components/reports-admin/reports-admin.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+
+import { AppComponent } from '../app.component';
+import { SharedModule } from '../shared/shared/shared.module';
 
 
 
 @NgModule({
   declarations: [
-    TemplateComponent
+    TemplateComponent,
+    ReportsAdminComponent,
+    AdministratorsComponent,
+    DepartmentsComponent,
+    NavbarComponent
+  
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReportsAdminComponent,
-    AdministratorsComponent,
-    DepartmentsComponent,
-    NgModule
-  ]
+    SharedModule
+    
+    
+  ],
+ 
   
+  
+ 
 })
 export class AdminModule { }

@@ -1,1 +1,13 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary" class="mat-elevation-z8">  
+    <span><mat-icon>language</mat-icon>Aplikacja</span>
+
+    <div class="spacer"></div>
+
+    <a mat-button routerLink="/candidate/approvedTheses" routerLinkActive="router-link-active"><mat-icon>done</mat-icon> Zatwierdzone prace</a>
+    <a mat-button routerLink="/candidate/thesesList" routerLinkActive="router-link-active"><mat-icon>list</mat-icon>Lista prac </a>
+    <a mat-button routerLink="/candidate/myTheses" routerLinkActive="router-link-active"><mat-icon>description</mat-icon>Moja praca </a>
+    <a mat-button routerLink="/candidate/proponeThesis" routerLinkActive="router-link-active"><mat-icon>note_add</mat-icon>Zaproponuj prace </a>
+    <a mat-raised-button color="accent"  routerLinkActive="router-link-active">Wyloguj <mat-icon>logout</mat-icon></a>
+    
+
+</mat-toolbar>
