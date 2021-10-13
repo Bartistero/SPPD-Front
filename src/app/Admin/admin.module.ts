@@ -18,7 +18,9 @@ import { ReportsAdminComponent } from './components/reports-admin/reports-admin.
     AdminRoutingModule,
     ReportsAdminComponent,
     AdministratorsComponent,
-    DepartmentsComponent
+    DepartmentsComponent,
+    NgModule
   ]
+  
 })
 export class AdminModule { }
