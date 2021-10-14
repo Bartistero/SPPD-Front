@@ -9,7 +9,7 @@ const routes: Routes = [
 { path: 'about', component: AboutComponent},
 { path: 'approvedThesises', component: ApprovedThesisesComponent},
 
-{ path: 'login', component: LoginPageComponent,},
+{ path: 'login', component: LoginPageComponent},
 { path: 'admin',
 loadChildren: () => import('./Admin/admin.module').then((m) => m.AdminModule)},
 { path: 'adminUnit',
