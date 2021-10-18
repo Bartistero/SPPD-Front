@@ -1,7 +1,10 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
+import { CookieService } from 'src/app/_services/cookie.service';
+import { LocalStorageService } from 'src/app/_services/local-storage.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 
@@ -15,7 +18,7 @@ export class LoginPageComponent implements OnInit {
   public errorMessage = '';
   public data: any
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private localStorage: LocalStorageService,private authService: AuthService, private tokenStorage: TokenStorageService,private cookieService: CookieService,private router: Router) { }
 
   onSubmit(){
     let credentials = {
@@ -25,8 +28,15 @@ export class LoginPageComponent implements OnInit {
 
   this.authService.login(credentials).subscribe(
     data => {
-      console.log(data.headers.keys());
-      console.log(data.headers.get('authorization'));
+      console.log(this.tokenStorage.setToken(data.headers.get('authorization')))
+      this.localStorage.set('login',this.tokenStorage.getUser())
+      this.localStorage.set('token',this.tokenStorage.getToken())
+      this.localStorage.set('Token',data.headers.get('authorization'))
+      console.log(this.cookieService.get('Token'))
+      
+      if(this.tokenStorage.getPermission() == "SUPER_ADMIN")
+        this.router.navigate(['admin/departments'])
+        
 
      
       

@@ -4,19 +4,41 @@ import { AboutComponent } from './unLoggedUser/components/about/about.component'
 import { ApprovedThesisesComponent } from './unLoggedUser/components/approved-thesises/approved-thesises.component';
 import { LoginPageComponent } from './unLoggedUser/components/login-page/login-page.component';
 
+import { AuthorizeGuard } from './_guards/authorize.guard';
+import { UnLoggedGuard } from './_guards/un-logged.guard';
+
 const routes: Routes = [ 
   { path: '', redirectTo: 'about', pathMatch: 'full' },
-{ path: 'about', component: AboutComponent},
-{ path: 'approvedThesises', component: ApprovedThesisesComponent},
+{ path: 'about', component: AboutComponent,canActivate: [UnLoggedGuard]
+},
+{ path: 'approvedThesises', component: ApprovedThesisesComponent,canActivate: [UnLoggedGuard]
+},
 
-{ path: 'login', component: LoginPageComponent},
-{ path: 'admin',
+{ path: 'login', component: LoginPageComponent,canActivate: [UnLoggedGuard]
+},
+{ path: 'admin',canActivate: [AuthorizeGuard]
+,
+data: {
+  permission: 'SUPER_ADMIN'
+},
 loadChildren: () => import('./Admin/admin.module').then((m) => m.AdminModule)},
-{ path: 'adminUnit',
+{ path: 'adminUnit',canActivate: [AuthorizeGuard]
+,
+data: {
+  permission: 'ADMIN'
+},
 loadChildren: () => import('./AdminUnit/admin-unit.module').then((m) => m.AdminUnitModule)},
-{ path: 'candidate',
+{ path: 'candidate',canActivate: [AuthorizeGuard]
+,
+data: {
+  permission: 'STUDENT'
+},
 loadChildren: () => import('./Candidate/candidate.module').then((m) => m.CandidateModule)},
-{ path: 'supervisor',
+{ path: 'supervisor',canActivate: [AuthorizeGuard]
+,
+data: {
+  permission: 'LECTURER'
+},
 loadChildren: () => import('./Supervisor/supervisor.module').then((m) => m.SupervisorModule)},
 ];
 
