@@ -8,7 +8,7 @@
     <a mat-button routerLink="/adminUnit/theses" routerLinkActive="router-link-active"><mat-icon>description</mat-icon>Prace </a>
     <a mat-button routerLink="/adminUnit/reports" routerLinkActive="router-link-active"><mat-icon>list_alt</mat-icon>Raporty </a>
     <a mat-button routerLink="/adminUnit/blockedAccounts" routerLinkActive="router-link-active"><mat-icon>block</mat-icon>Zablokowane konta </a>
-    <a mat-raised-button color="accent"  routerLinkActive="router-link-active">Wyloguj <mat-icon>logout</mat-icon></a>
+    <a mat-raised-button color="accent" (click)="logout()" routerLinkActive="router-link-active">Wyloguj się <mat-icon>logout</mat-icon></a>
     
 
 </mat-toolbar>

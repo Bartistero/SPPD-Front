@@ -7,7 +7,7 @@
     <a mat-button routerLink="/supervisor/addTheses" routerLinkActive="router-link-active"><mat-icon>note_add</mat-icon>Dodaj prace </a>
     <a mat-button routerLink="/supervisor/myTheses" routerLinkActive="router-link-active"><mat-icon>description</mat-icon>Moje prace </a>
     <a mat-button routerLink="/supervisor/tickets" routerLinkActive="router-link-active"><mat-icon>feedback</mat-icon>Zgłoszenia </a>
-    <a mat-raised-button color="accent"  routerLinkActive="router-link-active">Wyloguj <mat-icon>logout</mat-icon></a>
+    <a mat-raised-button color="accent" (click)="logout()" routerLinkActive="router-link-active">Wyloguj się <mat-icon>logout</mat-icon></a>
     
 
 </mat-toolbar>
