@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -11,6 +12,7 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 export class LoginPageComponent implements OnInit {
   public loginForm: any
   public errorMessage = '';
+  public data: any
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
@@ -18,12 +20,13 @@ export class LoginPageComponent implements OnInit {
     let credentials = {
       "password": this.loginForm.controls.password.value,
       "username" : this.loginForm.controls.login.value
-      
-  
   }
+
   this.authService.login(credentials).subscribe(
-    data => {
-      console.log(data)
+    (data:HttpResponse<any>) => {
+      console.log(data.headers.get('Authorization'));
+     
+      
     },
     err => {
       this.errorMessage = err.error.message;
@@ -31,6 +34,8 @@ export class LoginPageComponent implements OnInit {
      
     }
   );
+
+  console.log(this.data)
   }
 
   ngOnInit(): void {
