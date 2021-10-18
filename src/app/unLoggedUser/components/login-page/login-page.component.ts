@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -23,8 +24,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   this.authService.login(credentials).subscribe(
-    (data:HttpResponse<any>) => {
-      console.log(data.headers.get('Authorization'));
+    data => {
+      console.log(data.headers.keys());
+      console.log(data.headers.get('authorization'));
+
      
       
     },
