@@ -12,6 +12,15 @@ export class ApiService {
   
 
   constructor(private http: HttpClient) { }
+  getVoivodeship(): Observable<any>{
+    return this.http.get(API_URL+'address/voivodeship')
+
+  }
+
+  getCounty(id: number): Observable<any>{
+    return this.http.get(API_URL+'address/count/'+id)
+
+  }
 
   
 }

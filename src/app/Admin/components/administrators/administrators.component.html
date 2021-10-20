@@ -1,2 +1,28 @@
-<p>administrators works!</p>
+<div  fxLayoutAlign="center " >
+    <mat-card id="cont"  fxFlex="50" >
+        <mat-toolbar color="primary">Dodaj użytkownika</mat-toolbar>
+        <form  fxLayout="column" class="login-form"  [formGroup]="adminForm">
+            <mat-form-field>
+                <input matInput  placeholder="imie" required  formControlName="adminName">
+            
+            </mat-form-field>
+            <mat-form-field>
+               <mat-label>Województwo</mat-label>
+                <mat-select formControlName="voivodeship" class="form-select" (selectionChange)="voivodeshipPicked()">
+                    <mat-option *ngFor="let elem of voivodeships" [value]="elem" >
+                    {{ elem.name.toLowerCase() }}
+                    </mat-option>
+                </mat-select> 
+            </mat-form-field> 
 
+            <mat-form-field *ngIf="showCounties">
+                <mat-label>Powiat</mat-label>
+                 <mat-select formControlName="county" class="form-select">
+                     <mat-option *ngFor="let elem of counties" [value]="counties">
+                     {{ elem.name }}
+                     </mat-option>
+                 </mat-select> 
+             </mat-form-field> 
+        </form>
+    </mat-card>
+</div>

@@ -8,7 +8,7 @@ import { DepartmentsComponent } from './components/departments/departments.compo
 import { ReportsAdminComponent } from './components/reports-admin/reports-admin.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
-import { AppComponent } from '../app.component';
+
 import { SharedModule } from '../shared/shared/shared.module';
 
 
@@ -25,7 +25,9 @@ import { SharedModule } from '../shared/shared/shared.module';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+    
+    
     
     
   ],

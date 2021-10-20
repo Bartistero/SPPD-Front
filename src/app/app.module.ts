@@ -56,6 +56,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
    
     
   ],
+  exports:[
+    SharedModule
+  ],
   
   providers: [
     ApiService,

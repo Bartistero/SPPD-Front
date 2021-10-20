@@ -13,6 +13,7 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = this.tokenStorage.getToken()
     console.log(token)
+    console.log("is token expried? "+this.tokenStorage.isTokenExpired())
     req = req.clone({
       url:  req.url,
       setHeaders: {
