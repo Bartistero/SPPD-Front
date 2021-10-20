@@ -5,7 +5,7 @@ import { CookieService } from './cookie.service';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 
-const AUTH_API = 'http://localhost:8080/';
+const AUTH_API = 'http://localhost:8080/api/';
 //const AUTH_API = 'https://sppd-server.herokuapp.com/';
 
 const httpOptions = {
@@ -17,6 +17,7 @@ const httpOptions = {
 
 @Injectable({
   providedIn: 'root'
+  
 })
 export class AuthService {
   

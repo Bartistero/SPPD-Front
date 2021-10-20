@@ -28,6 +28,9 @@ import { ProponeThesisComponent } from './Candidate/components/propone-thesis/pr
 import { ReportsAdminComponent } from './Admin/components/reports-admin/reports-admin.component';
 import { AdminModule } from './Admin/admin.module';
 import { SharedModule } from './shared/shared/shared.module';
+import { ApiService } from './_services/api.service';
+import { UniversalAppInterceptorService } from './_helpers/universal-app-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { SharedModule } from './shared/shared/shared.module';
     
   ],
   
-  providers: [],
+  providers: [
+    ApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

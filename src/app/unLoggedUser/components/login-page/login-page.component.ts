@@ -12,7 +12,8 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css'],
+  
 })
 export class LoginPageComponent implements OnInit {
   public loginForm: any
@@ -30,14 +31,24 @@ export class LoginPageComponent implements OnInit {
 
   this.authService.login(credentials).subscribe(
     data => {
-      console.log(this.tokenStorage.setToken(data.headers.get('authorization')))
-      this.localStorage.set('Login',this.tokenStorage.getUser())
-      this.localStorage.set('Token',data.headers.get('authorization'))
-      this.cookieService.set('Token',data.headers.get('authorization'))
-      console.log(this.cookieService.get('Token'))
+      console.log(this.tokenStorage.setToken(data.headers.get('Authorization')))
+      if(data.headers.get('Authorization')){
+        this.localStorage.set('Login',this.tokenStorage.getUser())
+        this.localStorage.set('Token',data.headers.get('Authorization'))
+        this.cookieService.set('Token',data.headers.get('Authorization'))
+        
+      }
+      
       
       if(this.tokenStorage.getPermission() == "SUPER_ADMIN")
-        this.router.navigate(['admin/departments'])
+        this.router.navigate(['admin'])
+      else if(this.tokenStorage.getPermission() == "ADMIN")
+        this.router.navigate(['adminUnit'])
+      else if(this.tokenStorage.getPermission() == "LECTURER")
+        this.router.navigate(['supervisor'])
+      else  
+        this.router.navigate(['candidate'])
+
         
 
      

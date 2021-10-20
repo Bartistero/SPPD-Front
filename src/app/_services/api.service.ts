@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 
 const API_URL = 'http://localhost:8080/api/';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  
 })
 export class ApiService {
   
