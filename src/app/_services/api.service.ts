@@ -22,5 +22,20 @@ export class ApiService {
 
   }
 
+  getBorough(id: number): Observable<any>{
+    return this.http.get(API_URL+'address/borough/'+id)
+
+  }
+
+  getCity(id: number): Observable<any>{
+    return this.http.get(API_URL+'address/city/'+id)
+
+  }
+
+  getStreet(id: number): Observable<any>{
+    return this.http.get(API_URL+'address/street/'+id)
+
+  }
+
   
 }

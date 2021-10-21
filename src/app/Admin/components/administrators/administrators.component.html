@@ -17,12 +17,39 @@
 
             <mat-form-field *ngIf="showCounties">
                 <mat-label>Powiat</mat-label>
-                 <mat-select formControlName="county" class="form-select">
-                     <mat-option *ngFor="let elem of counties" [value]="counties">
-                     {{ elem.name }}
+                 <mat-select formControlName="county" class="form-select" (selectionChange)="countyPicked()">
+                     <mat-option *ngFor="let county of counties" [value]="county">
+                     {{ county.name }}
                      </mat-option>
                  </mat-select> 
              </mat-form-field> 
+
+             <mat-form-field *ngIf="showBoroughs">
+                <mat-label>Gmina</mat-label>
+                 <mat-select formControlName="borough" class="form-select" (selectionChange)="boroughPicked()">
+                     <mat-option *ngFor="let borough of boroughs" [value]="borough">
+                     {{ borough.name }}
+                     </mat-option>
+                 </mat-select> 
+             </mat-form-field> 
+
+             <mat-form-field *ngIf="showCities">
+                <mat-label>Miasto</mat-label>
+                 <mat-select formControlName="city" class="form-select" (selectionChange)="cityPicked()">
+                     <mat-option *ngFor="let city of cities" [value]="city">
+                     {{ city.name }}
+                     </mat-option>
+                 </mat-select> 
+             </mat-form-field> 
+
+             <mat-form-field *ngIf="showStreets">
+                <mat-label>Ulica</mat-label>
+                 <mat-select formControlName="street" class="form-select" (selectionChange)="streetPicked()">
+                     <mat-option *ngFor="let street of streets" [value]="street">
+                     {{ street.characteristic }} {{street.secondPart}}  {{street.firstPart}} 
+                     </mat-option>
+                 </mat-select> 
+             </mat-form-field>
         </form>
     </mat-card>
 </div>
