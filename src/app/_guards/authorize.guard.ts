@@ -11,7 +11,6 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class AuthorizeGuard implements CanActivate {
   constructor(private loginService: AuthService,
-              private authStorageService: LocalStorageService,
               private jwtService: TokenStorageService,
               private router: Router,
               private cookieService: CookieService,
@@ -22,7 +21,9 @@ export class AuthorizeGuard implements CanActivate {
     state: RouterStateSnapshot): boolean {
       if (!this.cookieService.get('Token')) {
         console.log(this.jwtService.isTokenExpired())
-        this.router.navigate(['/login']);
+        if(this.jwtService.isTokenExpired())
+          this.loginService.logout()
+          
         return false;
       }else 
       { this.jwtService.setToken(this.cookieService.get('Token')) 

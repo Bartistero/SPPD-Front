@@ -8,18 +8,24 @@ import { TokenStorageService } from '../_services/token-storage.service';
   providedIn: 'root'
 })
 export class UniversalAppInterceptorService implements HttpInterceptor{
-  constructor( private api: ApiService,private tokenStorage: TokenStorageService) { }
+  constructor(private loginService: AuthService, private api: ApiService,private tokenStorage: TokenStorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const re = /login/gi;
     const token = this.tokenStorage.getToken()
     console.log(token)
+    if(this.tokenStorage.isTokenExpired())
+      this.loginService.logout()
     console.log("is token expried? "+this.tokenStorage.isTokenExpired())
-    req = req.clone({
-      url:  req.url,
-      setHeaders: {
-        Authorization: `${token}`
-      }
-    });
+    if (req.url.search(re) === -1 ){
+      req = req.clone({
+        url:  req.url,
+        setHeaders: {
+          Authorization: `${token}`
+        }
+      });
+    }
+    
     return next.handle(req);
   }
  

@@ -17,6 +17,11 @@ export class ApiService {
 
   }
 
+  getCountry(): Observable<any>{
+    return this.http.get(API_URL+'address/country')
+
+  }
+
   getCounty(id: number): Observable<any>{
     return this.http.get(API_URL+'address/count/'+id)
 

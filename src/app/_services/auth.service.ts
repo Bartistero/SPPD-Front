@@ -27,6 +27,7 @@ export class AuthService {
     private localStorage: LocalStorageService, private router: Router)  { }
 
   login(credentials:any): Observable<any> {
+    
     console.log(credentials.username+"  "+credentials.password+"   "+AUTH_API+"login")
     return this.http.post(AUTH_API + 'login', {
       password: credentials.password,
