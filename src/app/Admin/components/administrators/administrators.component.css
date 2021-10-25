@@ -8,3 +8,7 @@ button {
 mat-radio-button{
     margin: 20px;
 }
+
+.buttons{
+    font-size: 25px;
+}

@@ -42,5 +42,19 @@ export class ApiService {
 
   }
 
+  isLoginValid(login:string){
+    return this.http.get(API_URL+'login/check/'+login,{observe: "response"})
+
+  }
+
+  getFaculty(): Observable<any>{
+    return this.http.get(API_URL+'faculty')
+
+  }
+
+  addAdmin(admin: any): Observable<any>{
+    return this.http.post(API_URL+'admin',admin,{observe: "response"})
+  }
+
   
 }

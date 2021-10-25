@@ -1,7 +1,14 @@
-<div  fxLayoutAlign="center " >
-    <mat-card id="cont"  fxFlex="50" >
+
+    <div  fxLayoutAlign="center" >
+        <button mat-raised-button  color="primary" (click)="showAdmins()" class="buttons">Pokaż administratorów</button>
+        <button mat-raised-button  color="primary" (click)="showAddNewAdmin()"  class="buttons" >Dodaj administratora</button>
+
+    
+    </div>
+    <div  fxLayoutAlign="center " >
+    <mat-card id="cont"  fxFlex="50" [style.display]="newAdminStyle()">
         <mat-toolbar color="primary">Dodaj użytkownika</mat-toolbar>
-        <form  fxLayout="column" class="login-form"  [formGroup]="adminForm">
+        <form  fxLayout="column" class="login-form"  [formGroup]="adminForm" (ngSubmit)='onSubmitAdmin()'>
             <mat-form-field>
                 <input matInput  placeholder="Imie" required  formControlName="name" (change)="nameChange()">
             
@@ -13,27 +20,35 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput  placeholder="Nazwisko" required  (change)="lastNameChange()" formControlName="lastName">
+                <input matInput  placeholder="Nazwisko" required  (change)="lastNameChange()" formControlName="surname">
             
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput  placeholder="Login"   [readonly]="disableMessage" formControlName="login">
+                <input matInput  placeholder="Login"  required [readonly]="disableMessage" formControlName="login" (change)="isLoginValid()">
                 <mat-hint ><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong> </mat-hint>
             
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput  placeholder="Email"   [readonly]="disableMessage" formControlName="email">
-                <mat-hint ><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong> </mat-hint>
+                <input matInput  placeholder="Email" required formControlName="email">
+                
             
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput  placeholder="Pesel" required   formControlName="pesel">
-                
             
             </mat-form-field>
+
+            
+            <mat-radio-group  required placeholder="Wybierz płeć " formControlName="sex">
+                <mat-radio-button value="MEN">Mężczyzna</mat-radio-button>
+                <mat-radio-button value="WOMAN">Kobieta</mat-radio-button>
+            </mat-radio-group>
+                
+            
+           
 
             <mat-form-field>
                 <input matInput   placeholder="Telefon" required   formControlName="phone">
@@ -42,16 +57,25 @@
 
             <mat-form-field>
                 <mat-label>Uprawnienia</mat-label>
-                 <mat-select formControlName="permission" class="form-select" >
+                 <mat-select formControlName="permission" required class="form-select" >
                      <mat-option *ngFor="let permission of permissions" [value]="permission" >
-                     {{ permission.name }}
+                     {{ permission}}
+                     </mat-option>
+                 </mat-select> 
+             </mat-form-field> 
+
+             <mat-form-field>
+                <mat-label>Wydział</mat-label>
+                 <mat-select formControlName="facultyDto" required class="form-select" >
+                     <mat-option *ngFor="let faculty of faculties" [value]="faculty" >
+                     {{ faculty.name }}
                      </mat-option>
                  </mat-select> 
              </mat-form-field> 
 
             <mat-form-field>
                 <mat-label>Kraj</mat-label>
-                 <mat-select formControlName="country" class="form-select" >
+                 <mat-select formControlName="countryDto"  required class="form-select" >
                      <mat-option *ngFor="let country of countries" [value]="country" >
                      {{ country.name.toLowerCase() }}
                      </mat-option>
@@ -60,7 +84,7 @@
 
             <mat-form-field>
                <mat-label>Województwo</mat-label>
-                <mat-select formControlName="voivodeship" class="form-select" (selectionChange)="voivodeshipPicked()">
+                <mat-select formControlName="voivodeshipDto"  required class="form-select" (selectionChange)="voivodeshipPicked()">
                     <mat-option *ngFor="let elem of voivodeships" [value]="elem" >
                     {{ elem.name.toLowerCase() }}
                     </mat-option>
@@ -69,7 +93,7 @@
 
             <mat-form-field *ngIf="showCounties">
                 <mat-label>Powiat</mat-label>
-                 <mat-select formControlName="county" class="form-select" (selectionChange)="countyPicked()">
+                 <mat-select formControlName="countyDto" required class="form-select" (selectionChange)="countyPicked()">
                      <mat-option *ngFor="let county of counties" [value]="county">
                      {{ county.name }}
                      </mat-option>
@@ -78,7 +102,7 @@
 
              <mat-form-field *ngIf="showBoroughs">
                 <mat-label>Gmina</mat-label>
-                 <mat-select formControlName="borough" class="form-select" (selectionChange)="boroughPicked()">
+                 <mat-select formControlName="boroughDto" required class="form-select" (selectionChange)="boroughPicked()">
                      <mat-option *ngFor="let borough of boroughs" [value]="borough">
                      {{ borough.name }}
                      </mat-option>
@@ -87,7 +111,7 @@
 
              <mat-form-field *ngIf="showCities">
                 <mat-label>Miasto</mat-label>
-                 <mat-select formControlName="city" class="form-select" (selectionChange)="cityPicked()">
+                 <mat-select formControlName="cityDto" required class="form-select" (selectionChange)="cityPicked()">
                      <mat-option *ngFor="let city of cities" [value]="city">
                      {{ city.name }}
                      </mat-option>
@@ -96,12 +120,28 @@
 
              <mat-form-field *ngIf="showStreets">
                 <mat-label>Ulica</mat-label>
-                 <mat-select formControlName="street" class="form-select" (selectionChange)="streetPicked()">
+                 <mat-select formControlName="streetDto" class="form-select" (selectionChange)="streetPicked()">
                      <mat-option *ngFor="let street of streets" [value]="street">
                      {{ street.characteristic }} {{street.secondPart}}  {{street.firstPart}} 
                      </mat-option>
                  </mat-select> 
              </mat-form-field>
+
+             <mat-form-field>
+                <input matInput  placeholder="Number domu" required   formControlName="houseNumber">
+            
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput  placeholder="Numer mieszkania"    formControlName="flatNumber">
+            
+            </mat-form-field>
+
+            <button mat-raised-button  color="primary" type="submit" [disabled]="!adminForm.valid">Dodaj</button>
         </form>
     </mat-card>
+</div>
+
+<div  fxLayoutAlign="center " [style.display]="adminsStyle()">
+    hello
 </div>
