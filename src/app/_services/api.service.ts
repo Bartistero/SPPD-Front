@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -54,6 +54,13 @@ export class ApiService {
 
   addAdmin(admin: any): Observable<any>{
     return this.http.post(API_URL+'admin',admin,{observe: "response"})
+  }
+
+  getAdmin(): Observable<any>{
+    let param = new HttpParams();
+    param = param.set('page', 0);
+    param = param.set('pageSize', 100);
+    return this.http.get(API_URL+'admin',{params: param})
   }
 
   

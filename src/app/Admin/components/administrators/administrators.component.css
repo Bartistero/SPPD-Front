@@ -12,3 +12,20 @@ mat-radio-button{
 .buttons{
     font-size: 25px;
 }
+
+table {
+    width: 70%;
+    height: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    
+    margin-bottom: 50px;
+  }
+
+  .spacer{
+      height:50px;
+  }
+
+  td.mat-cell,th.mat-header-cell{
+    text-align: center;
+}

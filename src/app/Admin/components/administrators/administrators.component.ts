@@ -38,6 +38,8 @@ export class AdministratorsComponent implements OnInit {
   public  permissions = [
     "ADMIN"
   ]
+  displayedColAdmin: string[] = [ 'id', 'name','surname','permission','faculty','edit','delete']
+  dataSourceAdmins:any
   
   constructor(private apiService: ApiService) { }
 
@@ -212,26 +214,28 @@ export class AdministratorsComponent implements OnInit {
     data => {
       this.voivodeships = data
        
-        
       }
     )
 
     this.apiService.getCountry().subscribe(
       data => {
         this.countries = data
-          
-          
+  
         }
       )
 
       this.apiService.getFaculty().subscribe(
         data => {
           this.faculties = data
-            
-            
           }
         )
 
+
+      this.apiService.getAdmin().subscribe(
+        data => {
+            this.dataSourceAdmins = data
+        }
+      )
   }
 
 }

@@ -143,5 +143,52 @@
 </div>
 
 <div  fxLayoutAlign="center " [style.display]="adminsStyle()">
-    hello
+    <div class="spacer"></div>
+
+
+
+<table mat-table [dataSource]="dataSourceAdmins"  class="mat-elevation-z8" >
+
+    
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id  </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Imie </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+        <th mat-header-cell *matHeaderCellDef>  Nazwisko </th>
+        <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="permission">
+        <th mat-header-cell *matHeaderCellDef>  Uprawnienia </th>
+        <td mat-cell *matCellDef="let element"> {{element.permission}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="faculty">
+        <th mat-header-cell *matHeaderCellDef>  Wydzial </th>
+        <td mat-cell *matCellDef="let element"> {{element.faculty}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edytuj</th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button  color="primary">Edytuj</button> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Usuń</th>
+      <td mat-cell *matCellDef="let element"><button mat-raised-button  color="primary" >Usuń</button> </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColAdmin"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColAdmin;"></tr>
+  </table>
+  <div class="spacer"></div>
 </div>
