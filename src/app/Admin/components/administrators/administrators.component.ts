@@ -8,6 +8,11 @@ import { city } from 'src/app/shared/models/city';
 import { street } from 'src/app/shared/models/streets';
 import { country } from 'src/app/shared/models/country';
 import { faculty } from 'src/app/shared/models/faculty';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { EditAdminDialogComponent } from '../edit-admin-dialog/edit-admin-dialog.component';
+
 
 
 
@@ -40,8 +45,10 @@ export class AdministratorsComponent implements OnInit {
   ]
   displayedColAdmin: string[] = [ 'id', 'name','surname','permission','faculty','edit','delete']
   dataSourceAdmins:any
+  filteredCountries: Observable<country[]> | undefined;
+  filteredStreets: Observable<street[]> | undefined;
   
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,public dialog: MatDialog) { }
 
   adminForm = new FormGroup({
     name: new FormControl('',Validators.required),
@@ -58,14 +65,31 @@ export class AdministratorsComponent implements OnInit {
     countyDto: new FormControl('',Validators.required),
     boroughDto: new FormControl('',Validators.required),
     cityDto: new FormControl('',Validators.required),
-    streetDto: new FormControl(''),
+    streetDto: new FormControl('',Validators.required),
     sex: new FormControl('',Validators.required),
     houseNumber: new FormControl('',Validators.required),
     flatNumber: new FormControl('')
 
   })
 
- 
+  
+  public edit(object: any){
+    this.dialog.open(EditAdminDialogComponent,{data: {object}})
+  }
+
+  public delete(object:any){
+    if(confirm("Czy na pewno chcesz usunąć administratora "+object.name+" "+object.surname+"?"))
+    {
+      console.log(object)
+      this.apiService.deleteAdmin(object).subscribe(
+        data => {
+          console.log(data.status)
+        }
+      )
+    }
+  }
+
+
   public showAdmins() {
     this.isAdmins = true;
     this.isAdminForm = false;
@@ -188,10 +212,7 @@ export class AdministratorsComponent implements OnInit {
     
   }
 
-  public streetPicked(){
-      
-    
-  }
+ 
 
   public onSubmitAdmin(){
     console.log(this.adminForm.value)
@@ -206,8 +227,41 @@ export class AdministratorsComponent implements OnInit {
     this.adminForm.reset()
   }
 
+  _filter(val: string): country[] {
+    return this.countries.filter(option => {
+      return option.name.toLowerCase().match(val);
+    });
+  }
+
+  _filterStreet(val: string): street[] {
+    return this.streets.filter(option => {
+      return option.firstPart.toLowerCase().match(val) || option.secondPart.toLowerCase().match(val)
+      || option.characteristic.toLowerCase().match(val)
+    });
+  }
+
+
+  displayFn(object: any){
+    return object ? object.name : undefined
+  }
+
+  displayFnStreet(object: any){
+    return object ? object.firstPart : undefined
+  }
 
   ngOnInit(): void {
+
+    this.filteredCountries = this.adminForm.controls['countryDto'].valueChanges.pipe(
+      startWith(''), 
+      map(country =>  country ? this._filter(country) : this.countries.slice())
+      );
+
+    this.filteredStreets = this.adminForm.controls['streetDto'].valueChanges.pipe(
+        startWith(''), 
+        map(street =>  street ? this._filterStreet(street) : this.streets.slice())
+        );
+    
+
     
     
     this.apiService.getVoivodeship().subscribe(
@@ -220,6 +274,7 @@ export class AdministratorsComponent implements OnInit {
     this.apiService.getCountry().subscribe(
       data => {
         this.countries = data
+        
   
         }
       )
@@ -236,6 +291,8 @@ export class AdministratorsComponent implements OnInit {
             this.dataSourceAdmins = data
         }
       )
+      
   }
+
 
 }

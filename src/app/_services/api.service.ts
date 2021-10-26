@@ -63,5 +63,9 @@ export class ApiService {
     return this.http.get(API_URL+'admin',{params: param})
   }
 
+  deleteAdmin(adminDto: any): Observable<any>{
+    return this.http.delete(API_URL+'admin',adminDto)
+  }
+
   
 }

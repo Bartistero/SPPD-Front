@@ -12,6 +12,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -36,7 +38,10 @@ import { MatTableModule } from '@angular/material/table';
     ReactiveFormsModule,
     MatSelectModule,
     MatRadioModule,
-    MatTableModule
+    MatTableModule,
+    MatAutocompleteModule,
+    MatDialogModule
+    
     
    
   ]

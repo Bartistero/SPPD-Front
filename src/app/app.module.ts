@@ -33,6 +33,7 @@ import { UniversalAppInterceptorService } from './_helpers/universal-app-interce
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     BannerComponent,
+    
     
    
    

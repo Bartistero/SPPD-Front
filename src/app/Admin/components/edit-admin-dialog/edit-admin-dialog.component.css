@@ -1,0 +1,16 @@
+mat-dialog-content{
+    width: 600px;
+    height: 600px;
+}
+
+mat-card{
+    width:90%;
+}
+
+
+mat-radio-button{
+    margin: 20px;
+}
+mat-toolbar{
+    margin-bottom: 20px;
+}

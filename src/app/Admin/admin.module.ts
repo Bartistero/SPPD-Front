@@ -11,6 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { SharedModule } from '../shared/shared/shared.module';
 
+import { EditAdminDialogComponent } from './components/edit-admin-dialog/edit-admin-dialog.component';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { SharedModule } from '../shared/shared/shared.module';
     ReportsAdminComponent,
     AdministratorsComponent,
     DepartmentsComponent,
-    NavbarComponent
+    NavbarComponent,
+    EditAdminDialogComponent
   
   ],
   imports: [

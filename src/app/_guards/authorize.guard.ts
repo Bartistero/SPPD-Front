@@ -19,7 +19,7 @@ export class AuthorizeGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-      if (!this.cookieService.get('Token')) {
+      if (!this.localStorage.get('Token')) {
         console.log(this.jwtService.isTokenExpired())
         if(this.jwtService.isTokenExpired())
           this.loginService.logout()

@@ -1,0 +1,8 @@
+mat-toolbar{
+    position: fixed;
+    bottom: 0;
+}
+
+.spacer{
+    height:50px;
+}

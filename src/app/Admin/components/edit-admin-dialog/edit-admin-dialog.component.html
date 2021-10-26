@@ -1,0 +1,145 @@
+<mat-dialog-content>
+   <ng-container>
+    <div  fxLayoutAlign="center " >
+        <mat-card id="cont" >
+            <mat-toolbar color="primary">Edytuj</mat-toolbar>
+            <form  fxLayout="column" class="login-form"  [formGroup]="adminForm" >
+                <mat-form-field>
+                    <input matInput  placeholder="Imie" required  formControlName="name" (change)="nameChange()">
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Drugie imie"   formControlName="middleName">
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Nazwisko" required  (change)="lastNameChange()" formControlName="surname">
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Login"  required [readonly]="disableMessage" formControlName="login" (change)="isLoginValid()">
+                    <mat-hint ><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong> </mat-hint>
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Email" required formControlName="email">
+                    
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Pesel" required   formControlName="pesel">
+                
+                </mat-form-field>
+
+                
+                <mat-radio-group  required placeholder="Wybierz płeć " formControlName="sex">
+                    <mat-radio-button value="MEN">Mężczyzna</mat-radio-button>
+                    <mat-radio-button value="WOMAN">Kobieta</mat-radio-button>
+                </mat-radio-group>
+                    
+                
+            
+
+                <mat-form-field>
+                    <input matInput   placeholder="Telefon" required   formControlName="phone">
+                    
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Uprawnienia</mat-label>
+                    <mat-select formControlName="permission" required class="form-select" >
+                        <mat-option *ngFor="let permission of permissions" [value]="permission" >
+                        {{ permission}}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field>
+                    <mat-label>Wydział</mat-label>
+                    <mat-select formControlName="facultyDto" required class="form-select" >
+                        <mat-option *ngFor="let faculty of faculties" [value]="faculty" >
+                        {{ faculty.name }}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field>
+                    <mat-label>Kraj</mat-label>
+                    <input type="text" matInput  [matAutocomplete]="auto" formControlName="countryDto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                        {{country.name}}
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field> 
+
+                <mat-form-field>
+                <mat-label>Województwo</mat-label>
+                    <mat-select formControlName="voivodeshipDto"  required class="form-select" (selectionChange)="voivodeshipPicked()">
+                        <mat-option *ngFor="let elem of voivodeships" [value]="elem" >
+                        {{ elem.name.toLowerCase() }}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field *ngIf="showCounties">
+                    <mat-label>Powiat</mat-label>
+                    <mat-select formControlName="countyDto" required class="form-select" (selectionChange)="countyPicked()">
+                        <mat-option *ngFor="let county of counties" [value]="county">
+                        {{ county.name }}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field *ngIf="showBoroughs">
+                    <mat-label>Gmina</mat-label>
+                    <mat-select formControlName="boroughDto" required class="form-select" (selectionChange)="boroughPicked()">
+                        <mat-option *ngFor="let borough of boroughs" [value]="borough">
+                        {{ borough.name }}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field *ngIf="showCities">
+                    <mat-label>Miasto</mat-label>
+                    <mat-select formControlName="cityDto" required class="form-select" (selectionChange)="cityPicked()">
+                        <mat-option *ngFor="let city of cities" [value]="city">
+                        {{ city.name }}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field> 
+
+                <mat-form-field *ngIf="showStreets">
+                    <mat-label>Ulica</mat-label>
+                    
+
+                    <input type="text" matInput  [matAutocomplete]="auto" formControlName="streetDto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnStreet">
+                    <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+                        {{street.characteristic}} {{street.secondPart}} {{street.firstPart}}
+                    </mat-option>
+                    </mat-autocomplete>
+
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Number domu" required   formControlName="houseNumber">
+                
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput  placeholder="Numer mieszkania"    formControlName="flatNumber">
+                
+                </mat-form-field>
+
+                <button mat-raised-button  color="primary" type="submit" [disabled]="!adminForm.valid">Dodaj</button>
+            </form>
+        </mat-card>
+    </div>
+</ng-container>
+</mat-dialog-content>
