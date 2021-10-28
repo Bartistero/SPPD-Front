@@ -19,11 +19,11 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
       this.loginService.logout()
     
     if (req.url.search(re) === -1 ){
+      
       req = req.clone({
         url:  req.url,
         setHeaders: {
           Authorization: `${token}`,
-          
           
         }
       });
@@ -32,6 +32,7 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
   }else
   {
       if (req.url.search(re2) !== -1 ){
+       
       req = req.clone({
         url:  req.url,
         setHeaders: {

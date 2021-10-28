@@ -40,7 +40,7 @@ export class AuthService {
     this.cookieService.remove('Token')
     this.localStorage.remove('Token')
     this.localStorage.remove('Login')
-    this.router.navigate(['/login'])
+    this.router.navigate(['login'])
 
 
   }

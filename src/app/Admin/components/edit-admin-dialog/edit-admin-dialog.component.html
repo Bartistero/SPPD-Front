@@ -20,7 +20,7 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput  placeholder="Login"  required [readonly]="disableMessage" formControlName="login" (change)="isLoginValid()">
+                    <input matInput  placeholder="Login"  required [readonly]="disableMessage" formControlName="login" >
                     <mat-hint ><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong> </mat-hint>
                 
                 </mat-form-field>
@@ -61,7 +61,7 @@
 
                 <mat-form-field>
                     <mat-label>Wydział</mat-label>
-                    <mat-select formControlName="facultyDto" required class="form-select" >
+                    <mat-select formControlName="facultyDto" required class="form-select"  >
                         <mat-option *ngFor="let faculty of faculties" [value]="faculty" >
                         {{ faculty.name }}
                         </mat-option>
@@ -80,7 +80,7 @@
 
                 <mat-form-field>
                 <mat-label>Województwo</mat-label>
-                    <mat-select formControlName="voivodeshipDto"  required class="form-select" (selectionChange)="voivodeshipPicked()">
+                    <mat-select formControlName="voivodeshipDto"   required class="form-select" (selectionChange)="voivodeshipPicked()">
                         <mat-option *ngFor="let elem of voivodeships" [value]="elem" >
                         {{ elem.name.toLowerCase() }}
                         </mat-option>

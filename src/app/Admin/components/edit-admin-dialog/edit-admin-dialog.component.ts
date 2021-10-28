@@ -11,6 +11,8 @@ import { street } from 'src/app/shared/models/streets';
 import { voivodeship } from 'src/app/shared/models/voivodeship';
 import { ApiService } from 'src/app/_services/api.service';
 import {map, startWith} from 'rxjs/operators';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+
 
 @Component({
   selector: 'app-edit-admin-dialog',
@@ -18,9 +20,8 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./edit-admin-dialog.component.css']
 })
 export class EditAdminDialogComponent implements OnInit {
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService) {}
-
+  public status = this.data.object.facultyDto
   public faculties: faculty[] = []
   public countries: country[] = []
   public voivodeships: voivodeship[]= []
@@ -170,14 +171,48 @@ export class EditAdminDialogComponent implements OnInit {
   }
 
   displayFnStreet(object: any){
-    return object ? object.firstPart : undefined
+    if(object)
+      return object.characteristic+" "+object.secondPart+" "+object.firstPart
+    else
+      return ""
   }
 
 
   ngOnInit(): void {
-    console.log(this.data.object.facultyDto)
     this.faculties.push(this.data.object.facultyDto)
+    this.adminForm.controls.facultyDto.patchValue('facultyDto',this.data.object.facultyDto)
+
     
+    
+    
+    
+
+    this.apiService.getFaculty().subscribe(
+      data => {
+        this.faculties = data
+        
+        
+        }
+      )
+
+    this.apiService.getVoivodeship().subscribe(
+      data => {
+        this.voivodeships = data
+         
+        }
+      )
+  
+    this.apiService.getCountry().subscribe(
+        data => {
+          this.countries = data
+          
+    
+          }
+    )
+
+    
+    
+  
     this.filteredCountries = this.adminForm.controls['countryDto'].valueChanges.pipe(
       startWith(''), 
       map(country =>  country ? this._filter(country) : this.countries.slice())

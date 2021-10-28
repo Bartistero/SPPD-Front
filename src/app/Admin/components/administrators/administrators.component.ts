@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAdminDialogComponent } from '../edit-admin-dialog/edit-admin-dialog.component';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 
 
@@ -26,6 +27,7 @@ import { EditAdminDialogComponent } from '../edit-admin-dialog/edit-admin-dialog
 
 
 export class AdministratorsComponent implements OnInit {
+  public status : any
   public isAdmins = true;
   public isAdminForm = false;
   public faculties: faculty[] = []
@@ -74,14 +76,14 @@ export class AdministratorsComponent implements OnInit {
 
   
   public edit(object: any){
-    this.dialog.open(EditAdminDialogComponent,{data: {object}})
+    this.dialog.open(EditAdminDialogComponent,{data: {"object":object,"voivodeships":this.voivodeships}})
   }
 
   public delete(object:any){
     if(confirm("Czy na pewno chcesz usunąć administratora "+object.name+" "+object.surname+"?"))
     {
       console.log(object)
-      this.apiService.deleteAdmin(object).subscribe(
+      this.apiService.deleteAdmin(object.id).subscribe(
         data => {
           console.log(data.status)
         }
@@ -106,14 +108,29 @@ export class AdministratorsComponent implements OnInit {
   public setLoginAndEmail(){
     let name = (this.adminForm.controls.name.value).toLowerCase()
     let lastName = (this.adminForm.controls.surname.value).toLowerCase()
+    let login = name+"."+lastName
     if(name && lastName)
     {
-      this.adminForm.controls.login.setValue(name+"."+lastName)
-      this.isLoginValid()
-      this.adminForm.controls.email.setValue(name+"."+lastName+"@")
+      this.apiService.isLoginValid(login).subscribe(data => 
+        {
+        this.adminForm.controls.login.setValue(name+"."+lastName)
+        this.adminForm.controls.email.setValue(name+"."+lastName+"@")
+        this.status = false
+        },
+        err =>{
+         this.adminForm.controls.login.reset()
+         this.status = true
+        },
+        
+      )
+      
+    }
+      
     }
     
-  }
+  
+
+ 
 
   public adminsStyle()
   {
@@ -160,15 +177,6 @@ export class AdministratorsComponent implements OnInit {
 
   }
 
-  public isLoginValid(){
-    
-    this.apiService.isLoginValid(this.adminForm.controls.login.value).subscribe(
-      data => {
-          console.log(data.status)
-          
-        }
-      )
-  }
 
   public countyPicked(){
     this.showBoroughs = true
@@ -246,7 +254,10 @@ export class AdministratorsComponent implements OnInit {
   }
 
   displayFnStreet(object: any){
-    return object ? object.firstPart : undefined
+    if(object)
+      return object.characteristic+" "+object.secondPart+" "+object.firstPart
+    else
+      return ""
   }
 
   ngOnInit(): void {
