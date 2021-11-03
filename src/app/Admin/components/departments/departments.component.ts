@@ -14,7 +14,7 @@ public editFacultyForm : any
 public isFaculty = true;
 public isFacultyForm = false;
 public isFacultyEditForm = false;
-public displayedColFaculty: string[] = ['name','edit']
+public displayedColFaculty: string[] = ['id','name','edit']
 public dataSourceFaculty:any
 
 

@@ -52,12 +52,12 @@ export class ApiService {
   }
 
   addFaculty(faculty: any): Observable<any>{
-    return this.http.post(API_URL+'faculty/update',faculty,{observe: "response"})
+    return this.http.post(API_URL+'faculty',faculty,{observe: "response"})
   }
 
   
   editFaculty(faculty: any): Observable<any>{
-    return this.http.post(API_URL+'faculty',faculty,{observe: "response"})
+    return this.http.post(API_URL+'faculty/update',faculty,{observe: "response"})
   }
 
   addAdmin(admin: any): Observable<any>{
