@@ -20,7 +20,10 @@ import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
   styleUrls: ['./edit-admin-dialog.component.css']
 })
 export class EditAdminDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService) {}
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService) {
+    
+  }
   public status = this.data.object.facultyDto
   public faculties: faculty[] = []
   public countries: country[] = []
@@ -39,9 +42,9 @@ export class EditAdminDialogComponent implements OnInit {
   ]
   filteredCountries: Observable<country[]> | undefined;
   filteredStreets: Observable<street[]> | undefined;
-
-
-  
+  filteredFaculties: Observable<faculty[]> | undefined;
+  filteredVoivodeships: Observable<faculty[]> | undefined;
+ 
   adminForm = new FormGroup({
     name: new FormControl(this.data.object.name,Validators.required),
     middleName: new FormControl(this.data.object.middleName),
@@ -63,6 +66,9 @@ export class EditAdminDialogComponent implements OnInit {
     flatNumber: new FormControl(this.data.object.flatNumber)
 
   })
+
+  
+  
 
   public setLoginAndEmail(){
     let name = (this.adminForm.controls.name.value).toLowerCase()
@@ -86,7 +92,7 @@ export class EditAdminDialogComponent implements OnInit {
   }
 
   public voivodeshipPicked(){
-    //this.showCounties = true
+    
     
     this.apiService.getCounty(this.adminForm.controls.voivodeshipDto.value.id).subscribe(
       data => {
@@ -156,6 +162,7 @@ export class EditAdminDialogComponent implements OnInit {
     return this.countries.filter(option => {
       return option.name.toLowerCase().match(val);
     });
+    
   }
 
   _filterStreet(val: string): street[] {
@@ -165,22 +172,49 @@ export class EditAdminDialogComponent implements OnInit {
     });
   }
 
+  _filterFaculty(val: string): faculty[] {
+    return this.faculties.filter(option => {
+      return option.name.toLowerCase().match(val)
+    });
+  }
+
+  _filterVoivodeship(val: string): faculty[] {
+    return this.voivodeships.filter(option => {
+      return option.name.toLowerCase().match(val)
+    });
+  }
+
 
   displayFn(object: any){
-    return object ? object.name : undefined
+    return object ? object.name : ""
   }
 
   displayFnStreet(object: any){
-    if(object)
+    if(object) 
       return object.characteristic+" "+object.secondPart+" "+object.firstPart
-    else
+    else 
+      return ""
+  }
+
+  displayFnFaculty(object: any){
+    if(object) 
+      return object.name.toLowerCase()
+    else 
+      return ""
+  }
+
+  displayFnVoivodeship(object: any){
+    if(object) 
+      return object.name
+    else 
       return ""
   }
 
 
   ngOnInit(): void {
-    this.faculties.push(this.data.object.facultyDto)
-    this.adminForm.controls.facultyDto.patchValue('facultyDto',this.data.object.facultyDto)
+    
+    
+   
 
     
     
@@ -205,6 +239,7 @@ export class EditAdminDialogComponent implements OnInit {
     this.apiService.getCountry().subscribe(
         data => {
           this.countries = data
+          console.log(this.countries)
           
     
           }
@@ -222,6 +257,10 @@ export class EditAdminDialogComponent implements OnInit {
         startWith(''), 
         map(street =>  street ? this._filterStreet(street) : this.streets.slice())
         );
+
+  
+       
+    
     
   }
 

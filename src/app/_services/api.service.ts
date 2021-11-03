@@ -49,11 +49,23 @@ export class ApiService {
 
   getFaculty(): Observable<any>{
     return this.http.get(API_URL+'faculty')
+  }
 
+  addFaculty(faculty: any): Observable<any>{
+    return this.http.post(API_URL+'faculty/update',faculty,{observe: "response"})
+  }
+
+  
+  editFaculty(faculty: any): Observable<any>{
+    return this.http.post(API_URL+'faculty',faculty,{observe: "response"})
   }
 
   addAdmin(admin: any): Observable<any>{
     return this.http.post(API_URL+'admin',admin,{observe: "response"})
+  }
+
+  editAdmin(admin: any): Observable<any>{
+    return this.http.post(API_URL+'admin/put',admin,{observe: "response"})
   }
 
   getAdmin(): Observable<any>{
@@ -66,7 +78,7 @@ export class ApiService {
   deleteAdmin(id: number): Observable<any>{
     let param = new HttpParams();
     param = param.set('id',id)
-    return this.http.delete(API_URL+'admin/delete',{params: param})
+    return this.http.get(API_URL+'admin/delete',{params: param})
   }
 
   

@@ -61,16 +61,17 @@
 
                 <mat-form-field>
                     <mat-label>Wydział</mat-label>
-                    <mat-select formControlName="facultyDto" required class="form-select"  >
-                        <mat-option *ngFor="let faculty of faculties" [value]="faculty" >
-                        {{ faculty.name }}
-                        </mat-option>
-                    </mat-select> 
+                    <input type="text" matInput  [matAutocomplete]="auto" formControlName="facultyDto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnFaculty">
+                    <mat-option *ngFor="let faculty of filteredFaculties | async" [value]="faculty">
+                        {{faculty.name}}
+                    </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field> 
 
                 <mat-form-field>
                     <mat-label>Kraj</mat-label>
-                    <input type="text" matInput  [matAutocomplete]="auto" formControlName="countryDto">
+                    <input type="text" matInput  [matAutocomplete]="auto" tabindex="-1" formControlName="countryDto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
                         {{country.name}}
@@ -78,14 +79,17 @@
                     </mat-autocomplete>
                 </mat-form-field> 
 
+
                 <mat-form-field>
-                <mat-label>Województwo</mat-label>
-                    <mat-select formControlName="voivodeshipDto"   required class="form-select" (selectionChange)="voivodeshipPicked()">
-                        <mat-option *ngFor="let elem of voivodeships" [value]="elem" >
-                        {{ elem.name.toLowerCase() }}
-                        </mat-option>
-                    </mat-select> 
+                    <mat-label>Województwo</mat-label>
+                    <input type="text" matInput  [matAutocomplete]="auto" formControlName="voivodeshipDto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnVoivodeship">
+                    <mat-option *ngFor="let voivodeship of filteredVoivodeships | async" [value]="voivodeship">
+                        {{voivodeship.name}}
+                    </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field> 
+
 
                 <mat-form-field *ngIf="showCounties">
                     <mat-label>Powiat</mat-label>
