@@ -14,6 +14,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAlertModule } from '@lhn/mat-alert';
+
 
 
 
@@ -40,7 +42,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatRadioModule,
     MatTableModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAlertModule
     
     
    

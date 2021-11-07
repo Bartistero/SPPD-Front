@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatAlert } from '@lhn/mat-alert';
 import { AuthService } from 'src/app/_services/auth.service';
 import { CookieService } from 'src/app/_services/cookie.service';
 import { LocalStorageService } from 'src/app/_services/local-storage.service';
@@ -21,7 +22,7 @@ export class LoginPageComponent implements OnInit {
   public data: any
   public error = ""
 
-  constructor(private localStorage: LocalStorageService,private authService: AuthService, private tokenStorage: TokenStorageService,private cookieService: CookieService,private router: Router) { }
+  constructor(private alert: MatAlert,private localStorage: LocalStorageService,private authService: AuthService, private tokenStorage: TokenStorageService,private cookieService: CookieService,private router: Router) { }
 
   onSubmit(){
     let credentials = {
@@ -67,6 +68,15 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+/*
+    this.alert.show('Message title', 'Message content (<em>supports HMTL</em>)', {
+      buttonText: 'Great!',
+      buttonTheme: 'primary',
+      raisedButton: true,
+      
+      
+    });
+*/
     this.loginForm= new FormGroup({
       login: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required),

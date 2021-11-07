@@ -167,12 +167,19 @@ export class AdministratorsComponent implements OnInit {
       this.apiService.editAdmin(this.adminEditForm.value).subscribe(
         data =>{
           if(data.status == 200)
-            alert("Użytkownik zedytowany!")
+            {
+              alert("Użytkownik zedytowany!")
+            this.apiService.getAdmin().subscribe(
+              data => {
+                  this.dataSourceAdmins = data
+              }
+            )
+            }
           else
             alert("Coś poszło nie tak")
         }
       )
-      
+      window.location.reload()
     
 
   }
@@ -417,12 +424,20 @@ export class AdministratorsComponent implements OnInit {
     this.apiService.addAdmin(this.adminForm.value).subscribe(
       data =>{
         if(data.status == 200)
-          alert("Administrator został dodany!")
+          {
+            alert("Administrator został dodany!")
+          this.apiService.getAdmin().subscribe(
+            data => {
+                this.dataSourceAdmins = data
+            }
+          )
+          }
         else
           alert("Coś poszło nie tak")
       }
     )
     this.adminForm.reset()
+    window.location.reload()
   }
 
   _filter(val: string): country[] {
