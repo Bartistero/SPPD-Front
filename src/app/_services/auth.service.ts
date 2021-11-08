@@ -5,7 +5,7 @@ import { CookieService } from './cookie.service';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 
-const AUTH_API = 'http://localhost:8080/';
+const AUTH_API = 'http://localhost:8080/api/';
 //const AUTH_API = 'https://sppd-server.herokuapp.com/';
 
 const httpOptions = {
@@ -17,6 +17,7 @@ const httpOptions = {
 
 @Injectable({
   providedIn: 'root'
+  
 })
 export class AuthService {
   
@@ -26,6 +27,7 @@ export class AuthService {
     private localStorage: LocalStorageService, private router: Router)  { }
 
   login(credentials:any): Observable<any> {
+    
     console.log(credentials.username+"  "+credentials.password+"   "+AUTH_API+"login")
     return this.http.post(AUTH_API + 'login', {
       password: credentials.password,
@@ -38,7 +40,7 @@ export class AuthService {
     this.cookieService.remove('Token')
     this.localStorage.remove('Token')
     this.localStorage.remove('Login')
-    this.router.navigate(['/login'])
+    this.router.navigate(['login'])
 
 
   }
