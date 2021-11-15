@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
       if(data.headers.get('Authorization')){
         this.localStorage.set('Login',this.tokenStorage.getUser())
         this.localStorage.set('Token',data.headers.get('Authorization'))
-        this.cookieService.set('Token',data.headers.get('Authorization'))
+       // this.cookieService.set('Token',data.headers.get('Authorization'))
         
       }
       

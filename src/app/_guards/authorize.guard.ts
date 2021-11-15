@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { MatAlert } from '@lhn/mat-alert';
 import { Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
 import { CookieService } from '../_services/cookie.service';
@@ -14,7 +15,8 @@ export class AuthorizeGuard implements CanActivate {
               private jwtService: TokenStorageService,
               private router: Router,
               private cookieService: CookieService,
-              private localStorage: LocalStorageService) {
+              private localStorage: LocalStorageService,
+              private alert:MatAlert) {
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -22,11 +24,13 @@ export class AuthorizeGuard implements CanActivate {
       if (!this.localStorage.get('Token')) {
         console.log(this.jwtService.isTokenExpired())
         if(this.jwtService.isTokenExpired())
-          this.loginService.logout()
+            this.loginService.logout()
+            
+          
           
         return false;
       }else 
-      { this.jwtService.setToken(this.cookieService.get('Token')) 
+      { this.jwtService.setToken(this.localStorage.get('Token')!) 
         if(next.data.permission && next.data.permission.includes(this.jwtService.getPermission()))
           return true;
         else {

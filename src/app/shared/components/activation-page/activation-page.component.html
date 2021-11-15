@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">  
+    <span><mat-icon>language</mat-icon>Aplikacja</span>
+
+    <div class="spacer"></div>
+</mat-toolbar>
+<div class="spacer"></div>
+<div fxLayoutAlign="center center" *ngIf="status">
+<a  mat-raised-button color="primary" routerLink="/login" routerLinkActive="router-link-active">Zaloguj się <mat-icon>login</mat-icon></a>
+</div>
+<div fxLayoutAlign="center " *ngIf="!status">
+    <mat-card id="cont" fxFlex="50">
+        <mat-toolbar color="primary">Ustaw hasło dostępu</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="activationForm" (ngSubmit)='onSubmitActivate()'>
+            <mat-form-field>
+                <input matInput type="password" placeholder="hasło" [errorStateMatcher]="matcher" required formControlName="password" (change)="passwordChange()">
+                <mat-error *ngIf="activationForm.get('password')?.errors?.required && activationForm.get('password')?.touched">Pole hasło nie moze
+                    byc puste</mat-error>
+            
+            <mat-error *ngIf="activationForm.get('password')?.errors?.pattern && activationForm.get('password')?.touched">Pole hasło musi zawierać 8 znaków,male i duże litery oraz znak specjalny</mat-error>
+        </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="powtórz hasło"  [errorStateMatcher]="matcher" type="password" required formControlName="confirmPassword" (change)="passwordChange()">
+                <mat-error *ngIf="activationForm.get('confirmPassword')?.errors?.required && activationForm.get('confirmPassword')?.touched">Pole powtórz hasło nie moze
+                    byc puste</mat-error>
+            </mat-form-field>
+            <mat-error *ngIf="activationForm.hasError('notSame')">
+                Hasła nie są identyczne
+        </mat-error> 
+
+            
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!activationForm.valid">Aktywuj</button>
+        </form>
+    </mat-card>
+</div>
+
+

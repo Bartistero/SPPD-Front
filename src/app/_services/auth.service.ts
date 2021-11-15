@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from './cookie.service';
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
+import { MatAlert } from '@lhn/mat-alert';
 
 const AUTH_API = 'http://localhost:8080/api/';
 //const AUTH_API = 'https://sppd-server.herokuapp.com/';
@@ -24,7 +25,7 @@ export class AuthService {
   
 
   constructor(private http: HttpClient,private cookieService: CookieService,
-    private localStorage: LocalStorageService, private router: Router)  { }
+    private localStorage: LocalStorageService, private router: Router,private alert:MatAlert)  { }
 
   login(credentials:any): Observable<any> {
     
@@ -35,13 +36,22 @@ export class AuthService {
       
     },{observe: "response"});
   }
+  activate(credentials:any,token:any): Observable<any> {
+    
+    return this.http.post(AUTH_API + 'login/activate/'+token, {
+      password: credentials.password,
+      username: credentials.username
+      
+    },{observe: "response"});
+  }
 
   logout(){
-    this.cookieService.remove('Token')
+   
     this.localStorage.remove('Token')
     this.localStorage.remove('Login')
     this.router.navigate(['login'])
+    
+  }
 
 
   }
-}
