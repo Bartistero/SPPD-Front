@@ -45,6 +45,10 @@ export class AuthService {
     },{observe: "response"});
   }
 
+  checkStatus(login:string):Observable<any>{
+    return this.http.get(AUTH_API+"login/account-status",{observe: "response"})
+  }
+
   logout(){
    
     this.localStorage.remove('Token')

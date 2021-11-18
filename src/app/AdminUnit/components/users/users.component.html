@@ -1,1 +1,273 @@
-<p>users works!</p>
+<div fxLayoutAlign="center">
+    <button mat-raised-button color="primary" (click)="showUsers()" class="buttons">Pokaż użytkowników</button>
+    <button mat-raised-button color="primary" (click)="showAddNewUser()" class="buttons">Dodaj użytkownika</button>
+</div>
+
+<div class="spacer"></div>
+
+<div fxLayoutAlign="center" [style.display]="userStyle()" > <h1>Promotorzy</h1></div>
+<div fxLayoutAlign="center" [style.display]="userStyle()" >
+   
+    
+    
+   
+    <div class="spacer"></div>
+    <table mat-table [dataSource]="dataSourceSupervisor" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Imie </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="surname">
+            <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+            <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="permission">
+            <th mat-header-cell *matHeaderCellDef> Uprawnienia </th>
+            <td mat-cell *matCellDef="let element"> {{element.permission}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="faculty">
+            <th mat-header-cell *matHeaderCellDef> Wydzial </th>
+            <td mat-cell *matCellDef="let element"> {{element.facultyDto.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Edytuj</th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
+                    (click)="edit(element)">Edytuj</button> </td>
+        </ng-container>
+
+       
+
+        <tr mat-header-row *matHeaderRowDef="displayedColSupervisor"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColSupervisor;"></tr>
+    </table>
+    <div class="spacer"></div>
+</div>
+
+    <div fxLayoutAlign="center" [style.display]="userStyle()" > <h1>Dyplomanci</h1></div>
+    <div fxLayoutAlign="center " [style.display]="userStyle()">
+    
+    <table mat-table [dataSource]="dataSourceCandidate" class="mat-elevation-z8" >
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Imie </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="surname">
+            <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+            <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="permission">
+            <th mat-header-cell *matHeaderCellDef> Uprawnienia </th>
+            <td mat-cell *matCellDef="let element"> {{element.permission}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="faculty">
+            <th mat-header-cell *matHeaderCellDef> Wydzial </th>
+            <td mat-cell *matCellDef="let element"> {{element.facultyDto.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Edytuj</th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
+                    (click)="edit(element)">Edytuj</button> </td>
+        </ng-container>
+
+       
+
+        <tr mat-header-row *matHeaderRowDef="displayedColCandidate"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColCandidate;"></tr>
+    </table>
+</div>
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50" [style.display]="newUserStyle()">
+        <mat-toolbar color="primary">Dodaj użytkownika</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="userForm" (ngSubmit)='onSubmitUser()'>
+            <mat-form-field>
+                <input matInput placeholder="Imie" required formControlName="name" (change)="nameChange()">
+                <mat-error *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">Pole imie nie moze
+                    byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Drugie imie" formControlName="middleName">
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Nazwisko" required (change)="lastNameChange()" formControlName="surname">
+                <mat-error *ngIf="userForm.get('surname')?.invalid && userForm.get('surname')?.touched">Pole nazwisko
+                    nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Login" required [readonly]="disableMessage" formControlName="login">
+                <mat-hint><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong>
+                </mat-hint>
+                <mat-error *ngIf="status">Błędny login</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Email" required formControlName="email">
+                <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">Pole nazwisko nie
+                    moze byc puste</mat-error>
+
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Pesel" required formControlName="pesel">
+                <mat-error *ngIf="userForm.get('pesel')?.invalid && userForm.get('pesel')?.touched">Pole pesel nie
+                    moze byc puste</mat-error>
+
+            </mat-form-field>
+
+
+            <mat-radio-group required placeholder="Wybierz płeć " formControlName="sex">
+                <mat-radio-button value="MEN">Mężczyzna</mat-radio-button>
+                <mat-radio-button value="WOMAN">Kobieta</mat-radio-button>
+                <mat-error *ngIf="userForm.get('sex')?.invalid && userForm.get('sex')?.touched">Pole płeć nie moze byc
+                    puste</mat-error>
+            </mat-radio-group>
+
+
+
+
+            <mat-form-field>
+                <input matInput placeholder="Telefon" required formControlName="phone">
+                <mat-error *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched">Pole telefon nie
+                    moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Uprawnienia</mat-label>
+                <mat-select formControlName="permission" required class="form-select" (selectionChange)="permissionPicked()">
+                    <mat-option *ngFor="let permission of permissions" [value]="permission">
+                        {{ permission}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('permission')?.invalid && userForm.get('permission')?.touched">Pole
+                    uprawnienia nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Numer albumu" required formControlName="albumNumber" >
+                <mat-error *ngIf="userForm.get('albumNumber')?.invalid && userForm.get('albumNumber')?.touched">Pole numer albumu nie
+                moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Kraj</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto" formControlName="countryDto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                        {{country.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userForm.get('countryDto')?.invalid && userForm.get('countryDto')?.touched">Pole
+                    kraj nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Województwo</mat-label>
+                <mat-select formControlName="voivodeshipDto" required class="form-select"
+                    (selectionChange)="voivodeshipPicked()">
+                    <mat-option *ngFor="let elem of voivodeships" [value]="elem">
+                        {{ elem.name.toLowerCase() }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('voivodeshipDto')?.invalid && userForm.get('voivodeshipDto')?.touched">
+                    Pole województwo nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="showCounties">
+                <mat-label>Powiat</mat-label>
+                <mat-select formControlName="countyDto" required class="form-select" (selectionChange)="countyPicked()">
+                    <mat-option *ngFor="let county of counties" [value]="county">
+                        {{ county.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('countyDto')?.invalid && userForm.get('countyDto')?.touched">Pole
+                    powiat nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="showBoroughs">
+                <mat-label>Gmina</mat-label>
+                <mat-select formControlName="boroughDto" required class="form-select"
+                    (selectionChange)="boroughPicked()">
+                    <mat-option *ngFor="let borough of boroughs" [value]="borough">
+                        {{ borough.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('boroughDto')?.invalid && userForm.get('boroughDto')?.touched">Pole
+                    gmina nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="showCities">
+                <mat-label>Miasto</mat-label>
+                <mat-select formControlName="cityDto" required class="form-select" (selectionChange)="cityPicked()">
+                    <mat-option *ngFor="let city of cities" [value]="city">
+                        {{ city.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('cityDto')?.invalid && userForm.get('cityDto')?.touched">Pole miasto
+                    nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="showStreets">
+                <mat-label>Ulica</mat-label>
+
+
+                <input type="text" matInput [matAutocomplete]="auto" formControlName="streetDto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnStreet">
+                    <mat-option *ngFor="let street of filteredStreets | async" [value]="street">
+                        {{street.characteristic}} {{street.secondPart}} {{street.firstPart}}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Number domu" required formControlName="houseNumber">
+                <mat-error *ngIf="userForm.get('houseNumber')?.invalid && userForm.get('houseNumber')?.touched">Pole
+                    numer domu nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Numer mieszkania" formControlName="flatNumber">
+
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Dodaj</button>
+        </form>
+    </mat-card>
+</div>
+
+

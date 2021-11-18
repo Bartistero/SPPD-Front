@@ -81,5 +81,45 @@ export class ApiService {
     return this.http.get(API_URL+'admin/delete',{params: param})
   }
 
+
+
+  getCourse(): Observable<any>{
+    return this.http.get(API_URL+'degree-course')
+  }
+
+  addCourse(course: any): Observable<any>{
+    return this.http.post(API_URL+'degree-course',course,{observe: "response"})
+  }
+
+  
+  editCourse(course: any): Observable<any>{
+    return this.http.post(API_URL+'degree-course/update',course,{observe: "response"})
+  }
+
+
+
+  deleteUser(id: number): Observable<any>{
+    let param = new HttpParams();
+    param = param.set('id',id)
+    return this.http.get(API_URL+'user/delete',{params: param})
+  }
+
+  getUser(permission: string): Observable<any>{
+    let param = new HttpParams();
+    param = param.set('permission', permission);
+    
+    return this.http.get(API_URL+'user',{params: param})
+  }
+
+  addUser(user: any): Observable<any>{
+    return this.http.post(API_URL+'user',user,{observe: "response"})
+  }
+
+
+  getBlockedAccounts(){
+    return this.http.get(API_URL+"login/block-user")
+  }
+  
+
   
 }

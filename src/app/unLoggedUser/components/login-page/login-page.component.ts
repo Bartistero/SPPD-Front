@@ -56,27 +56,36 @@ export class LoginPageComponent implements OnInit {
       
     },
     err => {
-      /*this.errorMessage = err.error.message;
-      console.log(this.errorMessage)
-     */
-      this.error = "Błąd logowania"
-    
-    }
-  );
+      this.authService.checkStatus(credentials.username).subscribe(data => {
+        if(data != "ACTIVE"){
+          if(data == "SUSPENDED"){
+            this.alert.show('Błąd', 'Twoje konto jest zablokowane<br/> Skontaktur się z administratorem wydziału', {
+              buttonText: 'Ok',
+              buttonTheme: 'primary',
+              raisedButton: true,
+            });
+          }else{
+            this.alert.show('Błąd', 'Twoje konto jest nieaktywne<br/> Aktywuj je klikając na link wyslany na adres email', {
+              buttonText: 'Ok',
+              buttonTheme: 'primary',
+              raisedButton: true,
 
-  console.log(this.data)
-  }
+          })
+          
+          }
+      }
+      this.alert.show('Błąd', 'Bład logowania. Spróbuj ponownie', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      });
+    
+    });
+  })
+}
 
   ngOnInit(): void {
-/*
-    this.alert.show('Message title', 'Message content (<em>supports HMTL</em>)', {
-      buttonText: 'Great!',
-      buttonTheme: 'primary',
-      raisedButton: true,
-      
-      
-    });
-*/
+
     this.loginForm= new FormGroup({
       login: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required),

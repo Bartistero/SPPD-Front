@@ -1,1 +1,64 @@
-<p>faculties works!</p>
+<div fxLayoutAlign="center">
+    <button mat-raised-button color="primary" (click)="showCourse()" class="buttons">Pokaż kierunki</button>
+    <button mat-raised-button color="primary" (click)="showAddNewCourse()" class="buttons">Dodaj kierunek</button>
+</div>
+
+
+<div fxLayoutAlign="center " [style.display]="courseStyle()">
+    <div class="spacer"></div>
+
+
+
+    <table mat-table [dataSource]="dataSourceCourse" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> nazwa </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Edytuj</th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
+                    (click)="edit(element)">Edytuj</button> </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColCourse"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColCourse;"></tr>
+    </table>
+    <div class="spacer"></div>
+</div>
+
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50" [style.display]="newCourseStyle()">
+        <mat-toolbar color="primary">Dodaj kierunek</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="courseForm" (ngSubmit)='onSubmitCourse()'>
+            <mat-form-field>
+                <input matInput placeholder="nazwa" required formControlName="name" >
+                <mat-error *ngIf="courseForm.get('name')?.invalid && courseForm.get('name')?.touched">Pole nazwa nie moze
+                    byc puste</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!courseForm.valid">Dodaj</button>
+        </form>
+    </mat-card>
+</div>
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50" [style.display]="CourseEditStyle()">
+        <mat-toolbar color="primary">Edytuj kierunek</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="editCourseForm" (ngSubmit)='onSubmitEditCourse()'>
+            <mat-form-field>
+                <input matInput placeholder="nazwa" required formControlName="name" >
+                <mat-error *ngIf="editCourseForm.get('name')?.invalid && editCourseForm.get('name')?.touched">Pole nazwa nie moze
+                    byc puste</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!editCourseForm.valid">Dodaj</button>
+        </form>
+    </mat-card>
+</div>
