@@ -14,7 +14,7 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
-  
+
 })
 export class LoginPageComponent implements OnInit {
   public loginForm: any
@@ -22,74 +22,76 @@ export class LoginPageComponent implements OnInit {
   public data: any
   public error = ""
 
-  constructor(private alert: MatAlert,private localStorage: LocalStorageService,private authService: AuthService, private tokenStorage: TokenStorageService,private cookieService: CookieService,private router: Router) { }
+  constructor(private alert: MatAlert, private localStorage: LocalStorageService, private authService: AuthService, private tokenStorage: TokenStorageService, private cookieService: CookieService, private router: Router) { }
 
-  onSubmit(){
+  onSubmit() {
     let credentials = {
       "password": this.loginForm.controls.password.value,
-      "username" : this.loginForm.controls.login.value
-  }
+      "username": this.loginForm.controls.login.value
+    }
 
-  this.authService.login(credentials).subscribe(
-    data => {
-      console.log(this.tokenStorage.setToken(data.headers.get('Authorization')))
-      if(data.headers.get('Authorization')){
-        this.localStorage.set('Login',this.tokenStorage.getUser())
-        this.localStorage.set('Token',data.headers.get('Authorization'))
-       // this.cookieService.set('Token',data.headers.get('Authorization'))
-        
-      }
-      
-      
-      if(this.tokenStorage.getPermission() == "SUPER_ADMIN")
-        this.router.navigate(['admin'])
-      else if(this.tokenStorage.getPermission() == "ADMIN")
-        this.router.navigate(['adminUnit'])
-      else if(this.tokenStorage.getPermission() == "LECTURER")
-        this.router.navigate(['supervisor'])
-      else  
-        this.router.navigate(['candidate'])
+    this.authService.login(credentials).subscribe(
+      data => {
+        console.log(this.tokenStorage.setToken(data.headers.get('Authorization')))
+        if (data.headers.get('Authorization')) {
+          this.localStorage.set('Login', this.tokenStorage.getUser())
+          this.localStorage.set('Token', data.headers.get('Authorization'))
+          // this.cookieService.set('Token',data.headers.get('Authorization'))
 
-        
+        }
 
-     
-      
-    },
-    err => {
-      this.authService.checkStatus(credentials.username).subscribe(data => {
-        if(data != "ACTIVE"){
-          if(data == "SUSPENDED"){
-            this.alert.show('Błąd', 'Twoje konto jest zablokowane<br/> Skontaktur się z administratorem wydziału', {
-              buttonText: 'Ok',
-              buttonTheme: 'primary',
-              raisedButton: true,
-            });
+
+        if (this.tokenStorage.getPermission() == "SUPER_ADMIN")
+          this.router.navigate(['admin'])
+        else if (this.tokenStorage.getPermission() == "ADMIN")
+          this.router.navigate(['adminUnit'])
+        else if (this.tokenStorage.getPermission() == "LECTURER")
+          this.router.navigate(['supervisor'])
+        else
+          this.router.navigate(['candidate'])
+
+
+      },
+      err => {
+        this.authService.checkStatus(credentials.username).subscribe(data => {
+          if (data.body != "ACTIVE") {
+
+            if (data.body == "SUSPENDED") {
+              this.alert.show('Błąd', 'Twoje konto jest zablokowane<br/> Skontaktuj się z administratorem wydziału', {
+                buttonText: 'Ok',
+                buttonTheme: 'primary',
+                raisedButton: true,
+              })
+            } else if (data.body == "DISABLE") {
+              this.alert.show('Błąd', 'Twoje konto jest nieaktywne<br/> Aktywuj je klikając na link wyslany na adres email', {
+                buttonText: 'Ok',
+                buttonTheme: 'primary',
+                raisedButton: true,
+              })
+
+            } 
+
           }else{
-            this.alert.show('Błąd', 'Twoje konto jest nieaktywne<br/> Aktywuj je klikając na link wyslany na adres email', {
+            this.alert.show('Błąd', 'Bład logowania. Spróbuj ponownie', {
               buttonText: 'Ok',
               buttonTheme: 'primary',
               raisedButton: true,
-
-          })
-          
+            })
           }
-      }
-      this.alert.show('Błąd', 'Bład logowania. Spróbuj ponownie', {
-        buttonText: 'Ok',
-        buttonTheme: 'primary',
-        raisedButton: true,
-      });
-    
-    });
-  })
-}
+
+
+        });
+      })
+
+      this.loginForm.reset()
+  }
 
   ngOnInit(): void {
 
-    this.loginForm= new FormGroup({
-      login: new FormControl('',Validators.required),
-      password: new FormControl('',Validators.required),
+    this.loginForm = new FormGroup({
+      login: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     })
 
-  } 
+  }
 }

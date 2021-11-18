@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from './cookie.service';
 import { LocalStorageService } from './local-storage.service';
@@ -46,7 +46,10 @@ export class AuthService {
   }
 
   checkStatus(login:string):Observable<any>{
-    return this.http.get(AUTH_API+"login/account-status",{observe: "response"})
+    let param = new HttpParams()
+    param= param.set('login',login)
+    return this.http.get(AUTH_API+"login/account-status",{params:param,observe:"response"})
+    
   }
 
   logout(){
