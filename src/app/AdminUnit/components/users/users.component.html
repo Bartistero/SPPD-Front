@@ -11,7 +11,7 @@
     
     
    
-    <div class="spacer"></div>
+    
     <table mat-table [dataSource]="dataSourceSupervisor" class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
@@ -57,6 +57,7 @@
 
     <div fxLayoutAlign="center" [style.display]="userStyle()" > <h1>Dyplomanci</h1></div>
     <div fxLayoutAlign="center " [style.display]="userStyle()">
+        
     
     <table mat-table [dataSource]="dataSourceCandidate" class="mat-elevation-z8" >
 
@@ -270,4 +271,181 @@
     </mat-card>
 </div>
 
+
+
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50" [style.display]="userEditStyle()">
+        <mat-toolbar color="primary">Edytuj użytkownika</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="userEditForm" (ngSubmit)='onSubmitUserEdit()'>
+            <mat-form-field>
+                <input matInput placeholder="Imie" required formControlName="name" >
+                <mat-error *ngIf="userEditForm.get('name')?.invalid && userEditForm.get('name')?.touched">Pole imie
+                    nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Drugie imie" formControlName="middleName">
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Nazwisko" required  formControlName="surname">
+                <mat-error *ngIf="userEditForm.get('surname')?.invalid && userEditForm.get('surname')?.touched">Pole
+                    nazwisko nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Login" required  formControlName="login">
+                <mat-hint><strong>Pole uzupełni się automatycznie po wprowadzeniu imienia i nazwiska</strong>
+                </mat-hint>
+                <mat-error *ngIf="status">Błędny login</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Email" required formControlName="email">
+                <mat-error *ngIf="userEditForm.get('email')?.invalid && userEditForm.get('email')?.touched">Pole
+                    nazwisko nie moze byc puste</mat-error>
+
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Pesel" required formControlName="pesel">
+                <mat-error *ngIf="userEditForm.get('pesel')?.invalid && userEditForm.get('pesel')?.touched">Pole pesel
+                    nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+
+            <mat-radio-group required placeholder="Wybierz płeć " formControlName="sex">
+                <mat-radio-button value="MEN">Mężczyzna</mat-radio-button>
+                <mat-radio-button value="WOMAN">Kobieta</mat-radio-button>
+                <mat-error *ngIf="userEditForm.get('sex')?.invalid && userEditForm.get('sex')?.touched">Pole płeć nie
+                    moze byc puste</mat-error>
+            </mat-radio-group>
+
+
+
+
+            <mat-form-field>
+                <input matInput placeholder="Telefon" required formControlName="phone">
+                <mat-error *ngIf="userEditForm.get('phone')?.invalid && userEditForm.get('phone')?.touched">Pole
+                    telefon nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Uprawnienia</mat-label>
+                <mat-select formControlName="permission" required class="form-select">
+                    <mat-option *ngFor="let permission of permissions" [value]="permission">
+                        {{ permission}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="userEditForm.get('permission')?.invalid && userEditForm.get('permission')?.touched">
+                    Pole uprawnienia nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Numer albumu" required formControlName="albumNumber" >
+                <mat-error *ngIf="userEditForm.get('albumNumber')?.invalid && userEditForm.get('albumNumber')?.touched">Pole numer albumu nie
+                moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            
+
+            <mat-form-field>
+                <mat-label>Kraj</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto2" formControlName="countryDto">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                        {{country.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userEditForm.get('countryDto')?.invalid && userEditForm.get('countryDto')?.touched">
+                    Pole kraj nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Województwo</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto3" formControlName="voivodeshipDto" (change)="voivodeshipPicked1()"  (click)="clear()">
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn" (optionSelected)="voivodeshipPicked1()">
+                    <mat-option *ngFor="let voivodeship of filteredVoivodeships | async" [value]="voivodeship">
+                        {{voivodeship.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userEditForm.get('voivodeshipDto')?.invalid && userEditForm.get('voivodeshipDto')?.touched">
+                    Pole kraj nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Powiat</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto4" formControlName="countyDto" (change)="countyPicked1()" (click)="clear2()">
+                <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn" (optionSelected)="countyPicked1()">
+                    <mat-option *ngFor="let county of counties" [value]="county">
+                        {{ county.name }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userEditForm.get('countyDto')?.invalid && userEditForm.get('countyDto')?.touched">
+                    Pole powiat nie moze byc puste</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field>
+                <mat-label>Gmina</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto5" formControlName="boroughDto" (change)="boroughPicked1()" (click)="clear3()">
+                <mat-autocomplete #auto5="matAutocomplete" [displayWith]="displayFn" (optionSelected)="boroughPicked1()">
+                    <mat-option *ngFor="let borough of boroughs" [value]="borough">
+                        {{ borough.name }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userEditForm.get('boroughDto')?.invalid && userEditForm.get('boroughDto')?.touched">
+                    Pole gmina nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Miasto</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto6" formControlName="cityDto" (change)="cityPicked1()" (click)="clear4()">
+                <mat-autocomplete #auto6="matAutocomplete" [displayWith]="displayFn" (optionSelected)="cityPicked1()">
+                    <mat-option *ngFor="let city of cities" [value]="city">
+                        {{ city.name }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="userEditForm.get('cityDto')?.invalid && userEditForm.get('cityDto')?.touched">Pole
+                    miasto nie moze byc puste</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field >
+                <mat-label>Ulica</mat-label>
+                <input type="text" matInput [matAutocomplete]="auto7" formControlName="streetDto" (click)="clear5()">
+                <mat-autocomplete #auto7="matAutocomplete" [displayWith]="displayFnStreet">
+                    <mat-option *ngFor="let street of filteredStreets1 | async" [value]="street">
+                        {{street.characteristic}} {{street.secondPart}} {{street.firstPart}}
+                    </mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Number domu" required formControlName="houseNumber">
+                <mat-error
+                    *ngIf="userEditForm.get('houseNumber')?.invalid && userEditForm.get('houseNumber')?.touched">Pole
+                    numer domu nie moze byc puste</mat-error>
+
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Numer mieszkania" formControlName="flatNumber">
+
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!userEditForm.valid">Edytuj</button>
+        </form>
+    </mat-card>
+</div>
 

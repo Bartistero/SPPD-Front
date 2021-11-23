@@ -13,6 +13,8 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const re = /login/gi;
     const re2 = /check/gi;
+    const re3 = /block-user/gi;
+    
     const token = this.tokenStorage.getToken()
     
     if(this.tokenStorage.isTokenExpired())
@@ -29,18 +31,25 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
       });
       
       return next.handle(req);
-  }else
+  }else if(req.url.search(re2) !== -1)
   {
-      if (req.url.search(re2) !== -1 ){
-       
+      
       req = req.clone({
         url:  req.url,
         setHeaders: {
           Authorization: `${token}`
         }
       });
-    }
+    
       return next.handle(req);
+  }else  {
+    req = req.clone({
+      url:  req.url,
+      setHeaders: {
+        Authorization: `${token}`
+      }
+    });
+    return next.handle(req);
   }
       
   

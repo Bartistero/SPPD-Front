@@ -1,4 +1,5 @@
 <div class="spacer"></div>
+<div fxLayoutAlign="center" ><h1>Zablokowane konta</h1></div>
 <div fxLayoutAlign="center" >
    
     
@@ -20,9 +21,14 @@
             <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="login">
+        <ng-container matColumnDef="userName">
             <th mat-header-cell *matHeaderCellDef> Login </th>
-            <td mat-cell *matCellDef="let element"> {{element.login}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountStatus">
+            <th mat-header-cell *matHeaderCellDef> Status</th>
+            <td mat-cell *matCellDef="let element"> {{element.accountStatus}} </td>
         </ng-container>
 
       

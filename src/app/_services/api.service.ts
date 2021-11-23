@@ -104,6 +104,7 @@ export class ApiService {
     return this.http.get(API_URL+'user/delete',{params: param})
   }
 
+
   getUser(permission: string): Observable<any>{
     let param = new HttpParams();
     param = param.set('permission', permission);
@@ -111,13 +112,21 @@ export class ApiService {
     return this.http.get(API_URL+'user',{params: param})
   }
 
+  editUser(user: any): Observable<any>{
+    return this.http.post(API_URL+'user/put',user,{observe: "response"})
+  }
+
   addUser(user: any): Observable<any>{
     return this.http.post(API_URL+'user',user,{observe: "response"})
   }
 
 
-  getBlockedAccounts(){
+  getBlockedAccounts(): Observable<any>{
     return this.http.get(API_URL+"login/block-user")
+  }
+
+  unlockAccount(user: any): Observable<any>{
+    return this.http.post(API_URL+"login/block-user",user,{observe: "response"})
   }
   
 

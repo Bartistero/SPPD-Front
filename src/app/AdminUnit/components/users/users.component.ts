@@ -37,10 +37,10 @@ export class UsersComponent implements OnInit {
   public showCities = false
   public showStreets = false
   public disableMessage = true
-  public permissions = ["Promotor","Dyplomant"]
+  public permissions = ["Promotor", "Dyplomant"]
   public albumStatus = false
-    
-  
+
+
   displayedColSupervisor: string[] = ['id', 'name', 'surname', 'edit']
   displayedColCandidate: string[] = ['id', 'name', 'surname', 'edit']
   dataSourceSupervisor: any
@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit {
     pesel: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     permission: new FormControl('', Validators.required),
-    albumNumber: new FormControl('',Validators.required),
+    albumNumber: new FormControl('', Validators.required),
     countryDto: new FormControl('', Validators.required),
     voivodeshipDto: new FormControl('', Validators.required),
     countyDto: new FormControl('', Validators.required),
@@ -88,7 +88,7 @@ export class UsersComponent implements OnInit {
     pesel: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     permission: new FormControl('', Validators.required),
-    facultyDto: new FormControl('', Validators.required),
+    albumNumber: new FormControl('', Validators.required),
     countryDto: new FormControl('', Validators.required),
     voivodeshipDto: new FormControl('', Validators.required),
     countyDto: new FormControl('', Validators.required),
@@ -103,16 +103,24 @@ export class UsersComponent implements OnInit {
 
 
 
-  public permissionPicked(){
-    if(this.userForm.controls.permission.value == "Promotor")
+  public permissionPicked() {
+    if (this.userForm.controls.permission.value == "Promotor")
       this.userForm.controls.albumNumber.disable()
     else
       this.userForm.controls.albumNumber.enable()
 
-
   }
+
+  public permissionPickedEdit() {
+    if (this.userEditForm.controls.permission.value == "Promotor")
+      this.userEditForm.controls.albumNumber.disable()
+    else
+      this.userEditForm.controls.albumNumber.enable()
+  }
+
   public edit(object: any) {
-    this.showEditUser()
+    
+    console.log(object)
     this.apiService.getCounty(object.voivodeshipDto.id).subscribe(data => {
       this.counties = data
     })
@@ -148,8 +156,7 @@ export class UsersComponent implements OnInit {
     this.userEditForm.controls.phone.setValue(object.phone)
     this.userEditForm.controls.login.setValue(object.login)
     this.userEditForm.controls.sex.setValue(object.sex)
-    this.userEditForm.controls.permission.setValue(object.permission)
-    this.userEditForm.controls.facultyDto.setValue(object.facultyDto)
+    this.userEditForm.controls.permission.setValue(this.translatePermission(object.permission))
     this.userEditForm.controls.countryDto.setValue(object.countryDto)
     this.userEditForm.controls.voivodeshipDto.setValue(object.voivodeshipDto)
     this.userEditForm.controls.countyDto.setValue(object.countyDto)
@@ -158,33 +165,28 @@ export class UsersComponent implements OnInit {
     this.userEditForm.controls.streetDto.setValue(object.streetDto)
     this.userEditForm.controls.houseNumber.setValue(object.houseNumber)
     this.userEditForm.controls.flatNumber.setValue(object.flatNumber)
-    console.log(object)
+
+
+    if (object.permission == "STUDENT")
+    {
+      console.log(object)
+      this.userEditForm.controls.albumNumber.setValue(object.albumNumber)
+      
+    }
+      
+    
+    this.userEditForm.controls.login.disable()
+    this.userEditForm.controls.email.disable()
+
+    this.showEditUser()
 
 
 
   }
 
-  public onSubmitUserEdit() {
+  
 
-    console.log(this.userEditForm.value)
-    this.apiService.editAdmin(this.userEditForm.value).subscribe(
-      data => {
-        if (data.status == 200) {
-          alert("Użytkownik zedytowany!")
-          this.apiService.getAdmin().subscribe(
-            data => {
-              this.dataSourceSupervisor = data
-            }
-          )
-        }
-        else
-          alert("Coś poszło nie tak")
-      }
-    )
-    window.location.reload()
-
-
-  }
+  
 
   public delete(object: any) {
     if (confirm("Czy na pewno chcesz usunąć użytkownika " + object.name + " " + object.surname + "?")) {
@@ -276,7 +278,7 @@ export class UsersComponent implements OnInit {
     return display
   }
 
-  public adminEditStyle() {
+  public userEditStyle() {
     var display: string
     if (!this.isUserEditForm)
       display = 'none'
@@ -415,19 +417,25 @@ export class UsersComponent implements OnInit {
 
   }
 
-  public translatePermission(){
-    let perName = this.userForm.controls.permission.value
-    if(perName == "Dyplomant")
+  public translatePermission(perName:string) {
+   
+    if (perName == "Dyplomant")
       return "STUDENT"
-    else
+    else if(perName == "Promotor")
       return "LECTURER"
+    else if(perName == "LECTURER")
+      return "Promotor"
+    else 
+      return "Dyplomant"
 
   }
 
 
   public onSubmitUser() {
-    this.userForm.controls.permission.setValue(this.translatePermission())
+    this.userForm.controls.permission.setValue(this.translatePermission(this.userForm.controls.permission.value))
     console.log(this.userForm.value)
+    if(this.userForm.controls.streetDto.value == "")
+      this.userForm.controls.streetDto.setValue(null)
     this.apiService.addUser(this.userForm.value).subscribe(
       data => {
         if (data.status == 200) {
@@ -437,7 +445,7 @@ export class UsersComponent implements OnInit {
               this.dataSourceSupervisor = data
             }
           )
-          this.apiService.getUser("STUDENT").subscribe( data => {
+          this.apiService.getUser("STUDENT").subscribe(data => {
             this.dataSourceCandidate = data
           })
         }
@@ -446,7 +454,40 @@ export class UsersComponent implements OnInit {
       }
     )
     this.userForm.reset()
+
+  }
+
+  public onSubmitUserEdit() {
+    this.userEditForm.controls.permission.setValue(this.translatePermission(this.userEditForm.controls.permission.value))
+    console.log(this.userEditForm.controls.login.value)
     
+
+
+    console.log(this.userEditForm.value)
+    this.apiService.editUser(this.userEditForm.getRawValue()).subscribe(
+      data => {
+        if (data.status == 200) {
+          if(confirm("Użytkownik został zedytowany!"))
+            window.location.reload()
+          else
+            window.location.reload()
+
+          this.apiService.getUser("LECTURER").subscribe(
+            data => {
+              this.dataSourceSupervisor = data
+            }
+          )
+          this.apiService.getUser("STUDENT").subscribe(data => {
+            this.dataSourceCandidate = data
+          })
+          
+        }
+        else
+          alert("Coś poszło nie tak")
+      }
+    )
+   
+
   }
 
   _filter(val: string): country[] {
@@ -513,12 +554,14 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.userForm.controls.albumNumber.disable()
 
-    this.apiService.getUser("LECTURER").subscribe( data => {
-        this.dataSourceSupervisor = data
+    this.apiService.getUser("LECTURER").subscribe(data => {
+      this.dataSourceSupervisor = data
+      console.log(this.dataSourceSupervisor)
     })
 
-    this.apiService.getUser("STUDENT").subscribe( data => {
+    this.apiService.getUser("STUDENT").subscribe(data => {
       this.dataSourceCandidate = data
+      console.log(this.dataSourceCandidate)
     })
 
 
@@ -539,12 +582,12 @@ export class UsersComponent implements OnInit {
 
 
 
-
+/*
     this.filteredFaculties = this.userEditForm.controls['facultyDto'].valueChanges.pipe(
       startWith(''),
       map(faculty => faculty ? this._filterFaculty(faculty) : this.faculties.slice())
     );
-
+*/
     this.filteredBoroughs = this.userEditForm.controls['boroughDto'].valueChanges.pipe(
       startWith(''),
       map(borough => borough ? this._filterBorough(borough) : this.boroughs.slice())
@@ -579,10 +622,10 @@ export class UsersComponent implements OnInit {
       }
     )
 
-    
 
 
-   
+
+
 
   }
 
