@@ -37,7 +37,7 @@ export class FacultiesComponent implements OnInit {
   
     public onSubmitEditCourse(){
       console.log(this.editCourseForm.value)
-      this.apiService.editFaculty(this.editCourseForm.value).subscribe(data =>{
+      this.apiService.editCourse(this.editCourseForm.value).subscribe(data =>{
         alert("Zedytowano kierunek")
         this.apiService.getCourse().subscribe(
           data => {

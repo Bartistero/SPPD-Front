@@ -111,7 +111,7 @@ export class UsersComponent implements OnInit {
 
   }
 
-  public permissionPickedEdit() {
+  public EditPermissionPicked() {
     if (this.userEditForm.controls.permission.value == "Promotor")
       this.userEditForm.controls.albumNumber.disable()
     else
@@ -168,11 +168,10 @@ export class UsersComponent implements OnInit {
 
 
     if (object.permission == "STUDENT")
-    {
-      console.log(object)
       this.userEditForm.controls.albumNumber.setValue(object.albumNumber)
-      
-    }
+    else
+      this.userEditForm.controls.albumNumber.disable()
+
       
     
     this.userEditForm.controls.login.disable()
@@ -434,6 +433,8 @@ export class UsersComponent implements OnInit {
   public onSubmitUser() {
     this.userForm.controls.permission.setValue(this.translatePermission(this.userForm.controls.permission.value))
     console.log(this.userForm.value)
+    console.log(this.userForm.controls.albumNumber.value)
+    console.log(this.userForm.getRawValue())
     if(this.userForm.controls.streetDto.value == "")
       this.userForm.controls.streetDto.setValue(null)
     this.apiService.addUser(this.userForm.value).subscribe(

@@ -93,7 +93,7 @@ export class ApiService {
 
   
   editCourse(course: any): Observable<any>{
-    return this.http.post(API_URL+'degree-course/update',course,{observe: "response"})
+    return this.http.post(API_URL+'degree-course/put',course,{observe: "response"})
   }
 
 

@@ -340,7 +340,7 @@
 
             <mat-form-field>
                 <mat-label>Uprawnienia</mat-label>
-                <mat-select formControlName="permission" required class="form-select">
+                <mat-select formControlName="permission" required class="form-select" (selectionChange)="EditPermissionPicked()">
                     <mat-option *ngFor="let permission of permissions" [value]="permission">
                         {{ permission}}
                     </mat-option>
