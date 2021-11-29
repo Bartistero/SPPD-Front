@@ -128,6 +128,22 @@ export class ApiService {
   unlockAccount(user: any): Observable<any>{
     return this.http.post(API_URL+"login/block-user",user,{observe: "response"})
   }
+
+
+  getMyThesis():Observable<any>{
+    return this.http.get(API_URL+"thesis/my-thesis",{observe:"response"})
+  }
+
+  proponeThesis(thesis: any){
+    return this.http.post(API_URL+"thesis",thesis, {observe:"response"})
+  }
+
+  getAllThesis():Observable<any>{
+    return this.http.get(API_URL+"thesis",{observe:"response"})
+  }
+
+
+
   
 
   

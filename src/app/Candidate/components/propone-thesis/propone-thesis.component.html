@@ -1,1 +1,49 @@
-<p>propone-thesis works!</p>
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50">
+        <mat-toolbar color="primary">Zaproponuj prace</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="proponeForm" (ngSubmit)='proponeSubmit()'>
+            <mat-form-field>
+                <mat-label>Promotor</mat-label>
+                <mat-select formControlName="lecturer" required class="form-select">
+                    <mat-option *ngFor="let supervisor of supervisors" [value]="supervisor">
+                        {{ supervisor.name}} {{supervisor.surname}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="proponeForm.get('supervisor')?.invalid && proponeForm.get('supervisor')?.touched">
+                    Pole uprawnienia nie moze byc puste</mat-error>
+            </mat-form-field>
+        
+            <mat-form-field>
+                <input matInput placeholder="Nazwa pracy" required formControlName="thesisName" >
+                <mat-error *ngIf="proponeForm.get('thesisName')?.invalid && proponeForm.get('thesisName')?.touched">Pole nazwa pracy
+                    nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Typ pracy</mat-label>
+                <mat-select formControlName="typeOfThesis" required class="form-select">
+                    <mat-option *ngFor="let type of thesisTypes" [value]="type">
+                        {{type}} 
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="proponeForm.get('typeOfThesis')?.invalid && proponeForm.get('typeOfThesis')?.touched">
+                    Pole typ pracy nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field >
+                <textarea matInput placeholder="Opis" required formControlName="description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Maksymalna liczba osób" required formControlName="amountPeople" >
+                <mat-error *ngIf="proponeForm.get('amountPeople')?.invalid && proponeForm.get('amountPeople')?.touched">Pole liczba osób
+                    nie moze byc puste</mat-error>
+            </mat-form-field>
+
+
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!proponeForm.valid">Zaproponuj</button>
+        </form>
+    </mat-card>
+</div>

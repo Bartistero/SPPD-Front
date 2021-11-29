@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/_services/api.service';
   styleUrls: ['./blocked-acounts.component.css']
 })
 export class BlockedAcountsComponent implements OnInit {
-  displayedColBlockedAccounts: string[] = ['id', 'name', 'surname', 'userName', 'accountStatus', 'unlock']
+  displayedColBlockedAccounts: string[] = ['id', 'name', 'surname', 'userName', 'unlock']
   dataSourceBlockedAccounts: any
 
   public unlock(elem: any) {
@@ -15,11 +15,16 @@ export class BlockedAcountsComponent implements OnInit {
     elem.accountStatus = "DISABLE"
     if (confirm("Czy na pewno chcesz odblokować konto użytkonika " + elem.name + " " + elem.surname + "?")) {
       this.api.unlockAccount(elem).subscribe(data => {
-        if (data.status == 200)
-          if(confirm("Konto zostało odblokowane!"))
+        if (data.status == 200) {
+          if (confirm("Konto zostało odblokowane!"))
             window.location.reload()
           else
             window.location.reload()
+        }
+        this.api.getBlockedAccounts().subscribe(data =>{
+          this.dataSourceBlockedAccounts = data
+        })
+
       },
         err => {
           alert("Cos poszło nie tak!")

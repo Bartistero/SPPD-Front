@@ -1,1 +1,40 @@
-<p>add-thesis works!</p>
+
+<div fxLayoutAlign="center ">
+    <mat-card id="cont" fxFlex="50">
+        <mat-toolbar color="primary">Dodaj prace</mat-toolbar>
+        <form fxLayout="column" class="login-form" [formGroup]="addThesisForm" (ngSubmit)='addThesisSubmit()'>
+            
+        
+            <mat-form-field>
+                <input matInput placeholder="Nazwa pracy" required formControlName="thesisName" >
+                <mat-error *ngIf="addThesisForm.get('thesisName')?.invalid && addThesisForm.get('thesisName')?.touched">Pole nazwa pracy
+                    nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Typ pracy</mat-label>
+                <mat-select formControlName="typeOfThesis" required class="form-select">
+                    <mat-option *ngFor="let type of thesisTypes" [value]="type">
+                        {{type}} 
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addThesisForm.get('typeOfThesis')?.invalid && addThesisForm.get('typeOfThesis')?.touched">
+                    Pole typ pracy nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field >
+                <textarea matInput placeholder="Opis" required formControlName="description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Maksymalna liczba osób" required formControlName="amountPeople" >
+                <mat-error *ngIf="addThesisForm.get('amountPeople')?.invalid && addThesisForm.get('amountPeople')?.touched">Pole liczba osób
+                    nie moze byc puste</mat-error>
+            </mat-form-field>
+
+
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!addThesisForm.valid">Dodaj</button>
+        </form>
+    </mat-card>
+</div>

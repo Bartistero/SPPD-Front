@@ -1,0 +1,74 @@
+button {
+    margin: 20px;
+}
+#cont{
+    margin: 50px;
+}
+
+mat-radio-button{
+    margin: 20px;
+}
+
+h1{
+    text-align: center;
+}
+button {
+    margin: 20px;
+}
+#cont{
+    margin: 50px;
+}
+
+mat-radio-button{
+    margin: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.buttons{
+    font-size: 25px;
+}
+
+table {
+    width: 85%;
+    height: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    
+    margin-bottom: 50px;
+  }
+
+  .spacer{
+      height:50px;
+  }
+
+  td.mat-cell,th.mat-header-cell{
+    text-align: center;
+    padding:5px;
+}
+
+
+.buttons{
+    font-size: 25px;
+}
+
+table {
+    width: 85%;
+    height: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    
+    margin-bottom: 50px;
+  }
+
+  .spacer{
+      height:50px;
+  }
+
+  td.mat-cell,th.mat-header-cell{
+    text-align: center;
+    padding:5px;
+}
+
