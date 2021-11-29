@@ -31,6 +31,7 @@ import { SharedModule } from './shared/shared/shared.module';
 import { ApiService } from './_services/api.service';
 import { UniversalAppInterceptorService } from './_helpers/universal-app-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ActivationPageComponent } from './shared/components/activation-page/activation-page.component';
 
 
 
@@ -43,6 +44,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     BannerComponent,
+    ActivationPageComponent,
     
     
    

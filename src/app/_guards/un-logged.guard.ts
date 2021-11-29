@@ -11,7 +11,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class UnLoggedGuard implements CanActivate {
   constructor(private loginService: AuthService,
-    private authStorageService: LocalStorageService,
+    private localStorage: LocalStorageService,
     private jwtService: TokenStorageService,
     private route: Router,
     private cookieService: CookieService) {
@@ -19,10 +19,10 @@ export class UnLoggedGuard implements CanActivate {
 canActivate(
 next: ActivatedRouteSnapshot,
 state: RouterStateSnapshot): boolean {
-  if(this.cookieService.get('Token'))
+  if(this.localStorage.get('Token'))
   {
     {
-      this.jwtService.setToken(this.cookieService.get('Token'))
+      this.jwtService.setToken(this.localStorage.get('Token')!)
       if(this.jwtService.getPermission() == "SUPER_ADMIN")
         this.route.navigate(['admin/departments'])
        

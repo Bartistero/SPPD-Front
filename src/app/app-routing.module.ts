@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ActivationPageComponent } from './shared/components/activation-page/activation-page.component';
 import { AboutComponent } from './unLoggedUser/components/about/about.component';
 import { ApprovedThesisesComponent } from './unLoggedUser/components/approved-thesises/approved-thesises.component';
 import { LoginPageComponent } from './unLoggedUser/components/login-page/login-page.component';
@@ -8,7 +9,8 @@ import { AuthorizeGuard } from './_guards/authorize.guard';
 import { UnLoggedGuard } from './_guards/un-logged.guard';
 
 const routes: Routes = [ 
-  { path: '', redirectTo: 'about', pathMatch: 'full' },
+{ path: '', redirectTo: 'about', pathMatch: 'full' },
+{path:'email/activate', component:ActivationPageComponent,canActivate: [UnLoggedGuard]},
 { path: 'about', component: AboutComponent,canActivate: [UnLoggedGuard]
 },
 { path: 'approvedThesises', component: ApprovedThesisesComponent,canActivate: [UnLoggedGuard]

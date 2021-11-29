@@ -1,1 +1,49 @@
-<p>blocked-acounts works!</p>
+<div class="spacer"></div>
+<div fxLayoutAlign="center" ><h1>Zablokowane konta</h1></div>
+<div fxLayoutAlign="center" >
+   
+    
+    <table mat-table [dataSource]="dataSourceBlockedAccounts" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Imie </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="surname">
+            <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+            <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef> Login </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accountStatus">
+            <th mat-header-cell *matHeaderCellDef> Status</th>
+            <td mat-cell *matCellDef="let element"> {{element.accountStatus}} </td>
+        </ng-container>
+
+      
+
+
+        <ng-container matColumnDef="unlock">
+            <th mat-header-cell *matHeaderCellDef> Odblokuj</th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary"
+                    (click)="unlock(element)"><mat-icon>lock_open</mat-icon></button> </td>
+        </ng-container>
+
+       
+
+        <tr mat-header-row *matHeaderRowDef="displayedColBlockedAccounts"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColBlockedAccounts;"></tr>
+    </table>
+    <div class="spacer"></div>
+</div>
