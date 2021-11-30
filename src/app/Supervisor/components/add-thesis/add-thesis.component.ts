@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/_services/api.service';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
   selector: 'app-add-thesis',
@@ -8,7 +9,7 @@ import { ApiService } from 'src/app/_services/api.service';
   styleUrls: ['./add-thesis.component.css']
 })
 export class AddThesisComponent implements OnInit {
-
+  constructor(private api: ApiService,private jwt: TokenStorageService) { }
   
   thesisTypes = ["Licencjacka","Inżynierska","Magisterska","Doktorancka"]
   supervisors:any
@@ -16,6 +17,7 @@ export class AddThesisComponent implements OnInit {
     thesisName: new FormControl('', Validators.required),
     typeOfThesis: new FormControl('', Validators.required),
     thesisStatus: new FormControl(''),
+    lecturer: new FormControl(''),
     description: new FormControl(''),
     amountPeople: new FormControl('',Validators.required),
     year: new FormControl(''),
@@ -39,7 +41,7 @@ export class AddThesisComponent implements OnInit {
     this.addThesisForm.controls.year.setValue({"id":1,"year":'2021'})
     this.addThesisForm.controls.year.setValue({"id":1,"year":'2021'})
   
-    this.addThesisForm.controls.thesisStatus.setValue("ADDED_STUDENT")
+    this.addThesisForm.controls.thesisStatus.setValue("ADDED_LECTURER")
     console.log(this.addThesisForm.value)
     this.api.proponeThesis(this.addThesisForm.value).subscribe(data =>{
       alert("Praca została dodana!")
@@ -52,13 +54,20 @@ export class AddThesisComponent implements OnInit {
 
   }
 
+  public RemoveElementFromArray(login: string) {
+    this.supervisors.forEach((value: { login: string; },index: any)=>{
+        if(value.login!=login) this.supervisors.splice(index);
+    });
 
-  constructor(private api: ApiService) { }
+  }
+  
 
   ngOnInit(): void {
+    
+
     this.api.getUser("LECTURER").subscribe(data =>{
       this.supervisors = data
-      console.log(data)
+      this.RemoveElementFromArray(this.jwt.getUser())
     })
   }
 

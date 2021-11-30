@@ -47,6 +47,7 @@ export class ApprovedThesesComponent implements OnInit {
 
       this.dataSourceApprovedThesis = data.body
       this.RemoveElementFromArray("ACCEPTED_FACULTY")
+      console.log(this.dataSourceApprovedThesis)
     },err=>{
       console.log(err)
     })

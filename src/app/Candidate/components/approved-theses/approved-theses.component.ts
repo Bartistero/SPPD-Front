@@ -30,7 +30,7 @@ export class ApprovedThesesComponent implements OnInit {
         case "ADDED_LECTURER": return "Dodana przez promotora"
         case "RESERVED_STUDENT": return "Zarezerwowana przez studenta"
         case "ACCEPTED_FACULTY": return "Zatwierdzona"
-        default : return "archiwalna"
+        default : return "Archiwalna"
         
       }
     }

@@ -142,6 +142,10 @@ export class ApiService {
     return this.http.get(API_URL+"thesis",{observe:"response"})
   }
 
+  updateThesis(elem:any):Observable<any>{
+    return this.http.post(API_URL+"thesis/update",elem,{observe:"response"})
+  }
+
 
 
   
