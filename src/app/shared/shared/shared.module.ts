@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAlertModule } from '@lhn/mat-alert';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -43,7 +44,8 @@ import { MatAlertModule } from '@lhn/mat-alert';
     MatTableModule,
     MatAutocompleteModule,
     MatDialogModule,
-    MatAlertModule
+    MatAlertModule,
+    MatPaginatorModule
     
     
    

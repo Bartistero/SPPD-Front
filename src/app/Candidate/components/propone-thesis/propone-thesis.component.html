@@ -31,8 +31,30 @@
                     Pole typ pracy nie moze byc puste</mat-error>
             </mat-form-field>
 
+            <mat-form-field>
+                <mat-label>Rok</mat-label>
+                <mat-select formControlName="year" required class="form-select">
+                    <mat-option *ngFor="let year of years" [value]="year">
+                        {{year.year}} 
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="proponeForm.get('year')?.invalid && proponeForm.get('year')?.touched">
+                    Pole rok nie moze byc puste</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Kierunek</mat-label>
+                <mat-select formControlName="degreeCourseDto" required class="form-select">
+                    <mat-option *ngFor="let degree of degrees" [value]="degree">
+                        {{degree.name}} 
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="proponeForm.get('degreeCourseDto')?.invalid && proponeForm.get('degreeCourseDto')?.touched">
+                    Pole kierunek moze byc puste</mat-error>
+            </mat-form-field>
+
             <mat-form-field >
-                <textarea matInput placeholder="Opis" required formControlName="description"></textarea>
+                <textarea matInput placeholder="Opis"  formControlName="description"></textarea>
             </mat-form-field>
 
             <mat-form-field>

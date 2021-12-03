@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ApiService } from 'src/app/_services/api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { voivodeship } from 'src/app/shared/models/voivodeship';
@@ -12,6 +12,9 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-users',
@@ -19,10 +22,12 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+ 
   public status: any
   public i = 1
   public isUsers = true;
+  public isPag= true
   public isUserForm = false;
   public isUserEditForm = false;
   public faculties: faculty[] = []
@@ -39,6 +44,7 @@ export class UsersComponent implements OnInit {
   public disableMessage = true
   public permissions = ["Promotor", "Dyplomant"]
   public albumStatus = false
+  public pagStyle = "margin-top: 10px; margin-left: 45%;"
 
 
   displayedColSupervisor: string[] = ['id', 'name', 'surname', 'edit']
@@ -65,7 +71,7 @@ export class UsersComponent implements OnInit {
     pesel: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     permission: new FormControl('', Validators.required),
-    albumNumber: new FormControl('', Validators.required),
+    albumNumber: new FormControl(''),
     countryDto: new FormControl('', Validators.required),
     voivodeshipDto: new FormControl('', Validators.required),
     countyDto: new FormControl('', Validators.required),
@@ -88,7 +94,7 @@ export class UsersComponent implements OnInit {
     pesel: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     permission: new FormControl('', Validators.required),
-    albumNumber: new FormControl('', Validators.required),
+    albumNumber: new FormControl(''),
     countryDto: new FormControl('', Validators.required),
     voivodeshipDto: new FormControl('', Validators.required),
     countyDto: new FormControl('', Validators.required),
@@ -199,35 +205,38 @@ export class UsersComponent implements OnInit {
     window.location.reload()
   }
 
+  
 
   public showUsers() {
     this.isUsers = true;
     this.isUserForm = false;
     this.isUserEditForm = false;
+    this.isPag = true
   }
 
   public showAddNewUser() {
     this.isUsers = false;
     this.isUserForm = true;
     this.isUserEditForm = false;
+    this.isPag = false
   }
 
   public showEditUser() {
     this.isUsers = false;
     this.isUserForm = false;
     this.isUserEditForm = true;
+    this.isPag = false
   }
 
 
 
-  public setLoginAndEmail() {
+  public setLogin() {
     let name = (this.userForm.controls.name.value).toLowerCase()
     let lastName = (this.userForm.controls.surname.value).toLowerCase()
-    let login = name + "." + lastName
+    let login = name+"."+lastName
     if (name && lastName) {
       this.apiService.isLoginValid(login).subscribe(data => {
         this.userForm.controls.login.setValue(name + "." + lastName)
-        this.userForm.controls.email.setValue(name + "." + lastName + "@")
         this.status = false
       },
         err => {
@@ -235,7 +244,6 @@ export class UsersComponent implements OnInit {
           var login = name + "." + lastName
           this.apiService.isLoginValid(login + this.i.toString()).subscribe(data => {
             this.userForm.controls.login.setValue(login + this.i.toString())
-            this.userForm.controls.email.setValue(name + "." + lastName + this.i.toString() + "@")
             this.status = false
 
           }, err => {
@@ -253,7 +261,7 @@ export class UsersComponent implements OnInit {
   }
 
 
-
+ 
 
 
   public userStyle() {
@@ -289,11 +297,11 @@ export class UsersComponent implements OnInit {
 
 
   public nameChange() {
-    this.setLoginAndEmail()
+    this.setLogin()
   }
 
   public lastNameChange() {
-    this.setLoginAndEmail()
+    this.setLogin()
   }
   clear() {
 
@@ -445,16 +453,19 @@ export class UsersComponent implements OnInit {
             data => {
               this.dataSourceSupervisor = data
             }
+            
           )
           this.apiService.getUser("STUDENT").subscribe(data => {
             this.dataSourceCandidate = data
           })
+          window.location.reload()
         }
         else
           alert("Coś poszło nie tak")
+          this.userForm.reset()
       }
     )
-    this.userForm.reset()
+    
 
   }
 
@@ -556,13 +567,13 @@ export class UsersComponent implements OnInit {
     this.userForm.controls.albumNumber.disable()
 
     this.apiService.getUser("LECTURER").subscribe(data => {
-      this.dataSourceSupervisor = data
-      console.log(this.dataSourceSupervisor)
+    this.dataSourceSupervisor = new MatTableDataSource(data)
+    this.dataSourceSupervisor.paginator = this.paginator.toArray()[0];
     })
 
     this.apiService.getUser("STUDENT").subscribe(data => {
-      this.dataSourceCandidate = data
-      console.log(this.dataSourceCandidate)
+      this.dataSourceCandidate = new MatTableDataSource(data)
+      this.dataSourceCandidate.paginator = this.paginator.toArray()[1];
     })
 
 
@@ -623,10 +634,12 @@ export class UsersComponent implements OnInit {
       }
     )
 
+  }
+  ngAfterViewInit() {
+    this.dataSourceSupervisor.paginator = this.paginator.toArray()[0];
+   
 
-
-
-
+    this.dataSourceCandidate.paginator = this.paginator.toArray()[1];
 
   }
 

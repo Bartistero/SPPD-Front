@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/_services/api.service';
 })
 export class ApprovedThesesComponent implements OnInit {
 
-  displayedColApprovedThesis: string[] = ['id', 'collaborator', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople']
+  displayedColApprovedThesis: string[] = ['id',  'description', 'degreeCourseDto','lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople']
   dataSourceApprovedThesis: any
   constructor(private api: ApiService) { }
   public translateType(elem:any){
@@ -36,18 +36,14 @@ export class ApprovedThesesComponent implements OnInit {
     }
   }
 
-  public RemoveElementFromArray(status: string) {
-    this.dataSourceApprovedThesis.forEach((value: { thesisStatus: string; },index: any)=>{
-        if(value.thesisStatus!=status) this.dataSourceApprovedThesis.splice(index);
-    });
-}
+
 
   ngOnInit(): void {
-    this.api.getAllThesis().subscribe(data => {
+    this.api.getAllThesis("ACCEPTED_FACULTY").subscribe(data => {
 
       this.dataSourceApprovedThesis = data.body
       console.log(this.dataSourceApprovedThesis)
-      this.RemoveElementFromArray("ACCEPTED_FACULTY")
+     
     },err=>{
       console.log(err)
     })

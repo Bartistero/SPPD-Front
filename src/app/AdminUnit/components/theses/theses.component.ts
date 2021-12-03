@@ -37,20 +37,14 @@ export class ThesesComponent implements OnInit {
     }
   }
 
-  public isAccepted(element: any){
-    if(element.thesisStatus == "ACCEPTED_FACULTY")
-      return false
-    else
-      return true
-  }
-
+  
   public accept(element:any){
     element.thesisStatus = "ACCEPTED_FACULTY"
     this.api.updateThesis(element).subscribe(data=>{
       if(data.status == 200)
       {
         alert("Zaakceptowano prace!")
-        this.api.getAllThesis().subscribe(data =>{
+        this.api.getAllThesis("ACCEPTED_LECTURER").subscribe(data =>{
           this.dataSourceThesis = data.body
         })
       }
@@ -66,7 +60,7 @@ export class ThesesComponent implements OnInit {
  
 
   ngOnInit(): void {
-    this.api.getAllThesis().subscribe(data => {
+    this.api.getAllThesis("ADDED_LECTURER").subscribe(data => {
 
       this.dataSourceThesis = data.body
       console.log(this.dataSourceThesis)

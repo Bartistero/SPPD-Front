@@ -8,6 +8,11 @@ import { ApiService } from 'src/app/_services/api.service';
   styleUrls: ['./propone-thesis.component.css']
 })
 export class ProponeThesisComponent implements OnInit {
+  public years: any
+  public degrees: any
+  public year = new Date().getFullYear()
+  public year2 = new Date().getFullYear()+1
+  public joinedYear = this.year.toString()+'/'+this.year2.toString()
 
   thesisTypes = ["Licencjacka","Inżynierska","Magisterska","Doktorancka"]
   supervisors:any
@@ -16,9 +21,11 @@ export class ProponeThesisComponent implements OnInit {
     typeOfThesis: new FormControl('', Validators.required),
     lecturer: new FormControl('', Validators.required),
     thesisStatus: new FormControl(''),
+    year: new FormControl('', Validators.required),
+    degreeCourseDto: new FormControl('', Validators.required),
     description: new FormControl(''),
     amountPeople: new FormControl('',Validators.required),
-    year: new FormControl(''),
+   
     
     
 
@@ -36,8 +43,6 @@ export class ProponeThesisComponent implements OnInit {
 
   public proponeSubmit(){
     this.proponeForm.controls.typeOfThesis.setValue(this.tranlateType(this.proponeForm.controls.typeOfThesis.value))
-    this.proponeForm.controls.year.setValue({"id":1,"year":'2021'})
-    this.proponeForm.controls.year.setValue({"id":1,"year":'2021'})
     this.proponeForm.controls.lecturer.setValue({
       "id": this.proponeForm.controls.lecturer.value.id,
       "name": this.proponeForm.controls.lecturer.value.name,
@@ -45,7 +50,7 @@ export class ProponeThesisComponent implements OnInit {
     })
     this.proponeForm.controls.thesisStatus.setValue("ADDED_STUDENT")
     console.log(this.proponeForm.value)
-    this.api.proponeThesis(this.proponeForm.value).subscribe(data =>{
+    this.api.proponeThesis(this.proponeForm.getRawValue()).subscribe(data =>{
       alert("Praca została dodana!")
       this.proponeForm.reset()
     },err =>{
@@ -63,6 +68,19 @@ export class ProponeThesisComponent implements OnInit {
       this.supervisors = data
       console.log(data)
     })
-  }
+  
 
+  this.api.getYear().subscribe(data =>{
+    this.years = data.body
+    this.years = this.years.filter((year: { year: string; }) => year.year == this.joinedYear);
+      this.proponeForm.controls.year.setValue(this.years[0])
+      this.proponeForm.controls.year.disable()
+    
+  })
+
+  this.api.getCourse().subscribe(data =>{
+    this.degrees = data
+  })
+
+}
 }
