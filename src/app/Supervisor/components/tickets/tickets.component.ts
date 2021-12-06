@@ -33,7 +33,8 @@ export class TicketsComponent implements OnInit {
       alert("Zaakceptowano prace!")
       this.api.getMyThesis().subscribe(data =>{
         this.dataSourceMyThesis = data.body
-        this.RemoveElementFromArray("ADDED_STUDENT")
+        this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus == "ADDED_STUDENT")
+
       })
     },err=>{
       alert("Coś poszło nie tak")
@@ -44,7 +45,22 @@ export class TicketsComponent implements OnInit {
   }
 
   public reject(elem: any){
+    if(confirm("Czy na pewno chcesz odrzucić propozycję pracy: "+elem.thesisName+" ?"))
+   {
+    elem.thesisStatus = "REJECTED"
+    this.api.updateThesis(elem).subscribe(data=>{
+      console.log(data)
+      if(data.status == 200)
+      alert("Odrzucono prace!")
+      this.api.getMyThesis().subscribe(data =>{
+        this.dataSourceMyThesis = data.body
+        this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus == "ADDED_STUDENT")
 
+      })
+    },err=>{
+      alert("Coś poszło nie tak")
+    })
+   }
   }
 
   public translateStatus(elem:any){
@@ -55,23 +71,20 @@ export class TicketsComponent implements OnInit {
         case "ADDED_LECTURER": return "Dodana przez promotora"
         case "RESERVED_STUDENT": return "Zarezerwowana przez studenta"
         case "ACCEPTED_FACULTY": return "Zatwierdzona"
+        case "REJECTED": return "Odrzucona"
         default : return "archiwalna"
         
       }
     }
   }
 
-  public RemoveElementFromArray(status: string) {
-    this.dataSourceMyThesis.forEach((value: { thesisStatus: string; },index: any)=>{
-        if(value.thesisStatus!=status) this.dataSourceMyThesis.splice(index);
-    });
-}
+ 
 
   ngOnInit(): void {
     this.api.getMyThesis().subscribe(data => {
 
       this.dataSourceMyThesis = data.body
-      this.RemoveElementFromArray("ADDED_STUDENT")
+      this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus == "ADDED_STUDENT")
       console.log(this.dataSourceMyThesis)
 
     })

@@ -41,7 +41,8 @@ export class MyThesesComponent implements OnInit {
     this.api.getMyThesis().subscribe(data => {
 
       this.dataSourceMyThesis = data.body
-      console.log(this.dataSourceMyThesis)
+      this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus != "ADDED_STUDENT")
+
     })
 
   }

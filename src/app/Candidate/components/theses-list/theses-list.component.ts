@@ -43,9 +43,14 @@ export class ThesesListComponent implements OnInit {
   }
 
   public save(element:any){
+    var student = {
+      "id":this.students[0].id,
+      "name":this.students[0].name,
+      "surname":this.students[0].surname
+    }
     if(confirm("Czy na pewno chcesz zapisać się na prace "+element.thesisName+" ?"))
       {
-        this.api.saveOnThesis(element.lecturer,element.id).subscribe(data=>{
+        this.api.saveOnThesis(student,element.id).subscribe(data=>{
           if(data.status == 200)
           {
             alert("Sukces!")
