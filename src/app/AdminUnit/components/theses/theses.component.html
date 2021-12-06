@@ -42,10 +42,9 @@
             <td mat-cell *matCellDef="let element"> {{element.year.year}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="collaborator">
-            <th mat-header-cell *matHeaderCellDef> Dyplomant</th>
-            <td mat-cell *matCellDef="let element">  <span *ngFor="let elem of element.collaborator">{{elem.name}} {{elem.surname}}<br/></span>
-             </td>
+        <ng-container matColumnDef="reservation">
+            <th mat-header-cell *matHeaderCellDef> Obecna liczba osób</th>
+            <td mat-cell *matCellDef="let element"> {{element.reservation}} </td>
         </ng-container>
 
         <ng-container matColumnDef="amountPeople">

@@ -166,6 +166,18 @@ export class ApiService {
     return this.http.post(API_URL+"thesis/update",elem,{observe:"response"})
   }
 
+  getCountUsers(permission: string):Observable<any>{
+    let params = new HttpParams()
+    params = params.set("permission",permission)
+    return this.http.get(API_URL+"static/person",{params:params})
+  }
+
+  getCountThesis(status: string):Observable<any>{
+    let params = new HttpParams()
+    params = params.set("status",status)
+    return this.http.get(API_URL+"static/thesis",{params:params})
+  }
+
 
 
   

@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/_services/api.service';
 export class ThesesComponent implements OnInit {
 
 
-  displayedColThesis: string[] = ['id', 'collaborator', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year', 'amountPeople', 'manage']
+  displayedColThesis: string[] = ['id', 'reservation', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year', 'amountPeople', 'manage']
   dataSourceThesis: any
   constructor(private api: ApiService) { }
   public translateType(elem: any) {

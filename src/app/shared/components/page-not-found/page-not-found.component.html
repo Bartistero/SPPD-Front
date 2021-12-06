@@ -1,0 +1,37 @@
+<div>
+    <mat-toolbar color="primary" class="mat-elevation-z8">  
+        <div fxShow="true" fxHide.gt-sm="true">
+            <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+      
+        <span class="companyName"><mat-icon>language</mat-icon>Aplikacja</span>
+    
+        <div class="spacer"></div>
+        <div fxShow="true" fxHide.lt-md="true">
+     </div>
+    
+    </mat-toolbar>
+    
+    
+    
+    
+    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+      
+          
+        </div>
+      </mat-sidenav>
+      
+    
+    </div>
+
+    <div id='image' fxLayoutAlign="center" >
+        
+        <img src="/assets/404.jpg" style=" width: 30%; margin-top: 50px;" />
+        
+    </div>
+
+    <span fxLayoutAlign="center"><h1>Strona nie istnieje</h1></span>
+    <span fxLayoutAlign="center" style="margin-bottom:50px;"><button mat-raised-button><a routerLink="..">Powrót</a></button></span>

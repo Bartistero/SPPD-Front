@@ -1,7 +1,15 @@
+<div>
 <mat-toolbar color="primary" class="mat-elevation-z8">  
-    <span><mat-icon>language</mat-icon>Aplikacja</span>
+    <div fxShow="true" fxHide.gt-sm="true">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+  
+    <span class="companyName"><mat-icon>language</mat-icon>Aplikacja</span>
 
     <div class="spacer"></div>
+    <div fxShow="true" fxHide.lt-md="true">
 
     <a mat-button routerLink="/adminUnit/users" routerLinkActive="router-link-active"><mat-icon>groups</mat-icon> Użytkownicy</a>
     <a mat-button routerLink="/adminUnit/faculties" routerLinkActive="router-link-active"><mat-icon>store</mat-icon>Kierunki </a>
@@ -9,6 +17,20 @@
     <a mat-button routerLink="/adminUnit/reports" routerLinkActive="router-link-active"><mat-icon>list_alt</mat-icon>Raporty </a>
     <a mat-button routerLink="/adminUnit/blockedAccounts" routerLinkActive="router-link-active"><mat-icon>block</mat-icon>Zablokowane konta </a>
     <a mat-raised-button color="accent" (click)="logout()" routerLinkActive="router-link-active">Wyloguj się <mat-icon>logout</mat-icon></a>
-    
+    </div>
 
 </mat-toolbar>
+
+
+<mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+    <div fxLayout="column">
+        <a mat-button routerLink="/adminUnit/users" routerLinkActive="router-link-active"><mat-icon>groups</mat-icon> Użytkownicy</a>
+        <a mat-button routerLink="/adminUnit/faculties" routerLinkActive="router-link-active"><mat-icon>store</mat-icon>Kierunki </a>
+        <a mat-button routerLink="/adminUnit/theses" routerLinkActive="router-link-active"><mat-icon>description</mat-icon>Prace </a>
+        <a mat-button routerLink="/adminUnit/reports" routerLinkActive="router-link-active"><mat-icon>list_alt</mat-icon>Raporty </a>
+        <a mat-button routerLink="/adminUnit/blockedAccounts" routerLinkActive="router-link-active"><mat-icon>block</mat-icon>Zablokowane konta </a>
+        <a mat-raised-button color="accent" (click)="logout()" routerLinkActive="router-link-active">Wyloguj się <mat-icon>logout</mat-icon></a>
+        
+    </div>
+  </mat-sidenav>
+</div>

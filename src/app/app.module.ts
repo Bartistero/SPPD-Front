@@ -32,6 +32,7 @@ import { ApiService } from './_services/api.service';
 import { UniversalAppInterceptorService } from './_helpers/universal-app-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivationPageComponent } from './shared/components/activation-page/activation-page.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 
 
@@ -45,6 +46,7 @@ import { ActivationPageComponent } from './shared/components/activation-page/act
     FooterComponent,
     BannerComponent,
     ActivationPageComponent,
+    PageNotFoundComponent,
     
     
    
