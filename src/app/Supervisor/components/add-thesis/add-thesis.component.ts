@@ -57,16 +57,14 @@ export class AddThesisComponent implements OnInit {
       alert("Cos poszlo nie tak")
       console.log(err)
       this.addThesisForm.reset()
+
     })
+    this.addThesisForm.controls.year.setValue(this.years[0])
+    this.addThesisForm.controls.year.disable()
 
   }
 
-  public RemoveElementFromArray(login: string) {
-    this.supervisors.forEach((value: { login: string; },index: any)=>{
-        if(value.login!=login) this.supervisors.splice(index);
-    });
 
-  }
 
  
 

@@ -16,6 +16,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAlertModule } from '@lhn/mat-alert';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 
 
@@ -45,7 +47,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatAutocompleteModule,
     MatDialogModule,
     MatAlertModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSidenavModule
+    
     
     
    

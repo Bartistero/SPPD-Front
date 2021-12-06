@@ -57,6 +57,8 @@ export class ProponeThesisComponent implements OnInit {
       alert("Cos poszlo nie tak")
       this.proponeForm.reset()
     })
+    this.proponeForm.controls.year.setValue(this.years[0])
+      this.proponeForm.controls.year.disable()
 
   }
 
