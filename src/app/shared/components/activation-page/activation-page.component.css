@@ -20,7 +20,7 @@ a{
 }
 
 table {
-    width: 70%;
+    width: 80%;
     height: 80%;
     margin-left:auto;
     margin-right:auto;
@@ -34,4 +34,19 @@ table {
 
   td.mat-cell,th.mat-header-cell{
     text-align: center;
+}
+
+@media (max-width:510px){
+    #tool{
+        font-size: 15px;
+    }
+    .mat-error{
+        margin:1px;
+    }
+}
+
+@media (max-width:390px){
+    #tool{
+        font-size: 11px;
+    }
 }

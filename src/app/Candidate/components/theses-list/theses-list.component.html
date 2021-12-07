@@ -1,5 +1,5 @@
 <div class="spacer"></div>
-<div fxLayoutAlign="center" ><h1>Zatwierdzone prace</h1></div>
+<div fxLayoutAlign="center" ><h1>Lista prac</h1></div>
 <div fxLayoutAlign="center" >
    
     
@@ -62,5 +62,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColListOfThesis"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColListOfThesis;" ></tr>
     </table>
-    <div class="spacer"></div>
+    
 </div>
+<div fxLayoutAlign="center " >
+    <mat-paginator  [length]="dataSourceListOfThesis.length" [pageSize]="5" [pageSizeOptions]="[1,5, 10, 25, 100]" aria-label="Wybierz strone" >
+    </mat-paginator>
+</div>
+
+<div class="spacer"></div>

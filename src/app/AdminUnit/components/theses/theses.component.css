@@ -35,3 +35,10 @@ table {
     padding:5px;
 }
 
+
+mat-paginator{
+    
+    margin-top: -30px;
+    margin-left:auto;
+    margin-right:auto;
+}

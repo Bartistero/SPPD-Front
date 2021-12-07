@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatAlert } from '@lhn/mat-alert';
 import jwtDecode from 'jwt-decode';
 
 import { ApiService } from 'src/app/_services/api.service';
@@ -10,13 +13,14 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
   styleUrls: ['./theses-list.component.css']
 })
 export class ThesesListComponent implements OnInit {
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   displayedColListOfThesis: string[] = ['id', 'reservation', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople','save',]
   dataSourceListOfThesis: any
   students:any
   public status = "ADDED_LECTURER"
   public status2 = "ADDED_STUDENT"
   dataSourceMyThesis: any
-  constructor(private api: ApiService, private jwt:TokenStorageService) { }
+  constructor(private api: ApiService, private jwt:TokenStorageService, private alert:MatAlert) { }
   public translateType(elem:any){
     {
       switch(elem){
@@ -53,7 +57,11 @@ export class ThesesListComponent implements OnInit {
         this.api.saveOnThesis(student,element.id).subscribe(data=>{
           if(data.status == 200)
           {
-            alert("Sukces!")
+            this.alert.show('Sukces', 'Zapisano na pracę!', {
+              buttonText: 'Ok',
+              buttonTheme: 'primary',
+              raisedButton: true,
+            })
             this.api.getAllThesis("ACCEPTED_LECTURER").subscribe(data => {
               this.dataSourceListOfThesis = data.body
              
@@ -61,7 +69,11 @@ export class ThesesListComponent implements OnInit {
           }
 
         },err=>{
-          alert("Coś poszlo nie tak")
+          this.alert.show('Błąd', 'Coś poszło nie tak', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
         })
       }
   }
@@ -72,7 +84,7 @@ export class ThesesListComponent implements OnInit {
     
     
     this.api.getAllThesis("ACCEPTED_LECTURER").subscribe(data => {
-      this.dataSourceListOfThesis = data.body
+      this.dataSourceListOfThesis = new MatTableDataSource(data.body)
       
     });
 
@@ -82,6 +94,11 @@ export class ThesesListComponent implements OnInit {
       console.log(this.students)
       
     })
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSourceListOfThesis.paginator = this.paginator.toArray()[0];
 
   }
 }

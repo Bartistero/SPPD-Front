@@ -14,8 +14,6 @@ const routes: Routes = [
 {path:'email/activate', component:ActivationPageComponent,canActivate: [UnLoggedGuard]},
 { path: 'about', component: AboutComponent,canActivate: [UnLoggedGuard]
 },
-{ path: 'approvedThesises', component: ApprovedThesisesComponent,canActivate: [UnLoggedGuard]
-},
 
 { path: 'login', component: LoginPageComponent,canActivate: [UnLoggedGuard]
 },

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/_services/api.service';
 
 @Component({
@@ -7,6 +9,7 @@ import { ApiService } from 'src/app/_services/api.service';
   styleUrls: ['./my-theses.component.css']
 })
 export class MyThesesComponent implements OnInit {
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   displayedColMyThesis: string[] = ['id', 'collaborator', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople']
   dataSourceMyThesis: any
   constructor(private api: ApiService) { }
@@ -40,10 +43,14 @@ export class MyThesesComponent implements OnInit {
   ngOnInit(): void {
     this.api.getMyThesis().subscribe(data => {
 
-      this.dataSourceMyThesis = data.body
+      this.dataSourceMyThesis = new MatTableDataSource(data.body)
       this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus != "ADDED_STUDENT")
 
     })
+
+  }
+  ngAfterViewInit() {
+    this.dataSourceMyThesis.paginator = this.paginator.toArray()[0];
 
   }
 

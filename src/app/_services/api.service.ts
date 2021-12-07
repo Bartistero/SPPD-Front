@@ -101,7 +101,7 @@ export class ApiService {
   deleteUser(id: number): Observable<any>{
     let param = new HttpParams();
     param = param.set('id',id)
-    return this.http.get(API_URL+'user/delete',{params: param})
+    return this.http.get(API_URL+'user/delete',{params: param, observe:"response"})
   }
 
 

@@ -13,6 +13,7 @@ import {map, startWith} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAdminDialogComponent } from '../edit-admin-dialog/edit-admin-dialog.component';
 import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
+import { MatAlert } from '@lhn/mat-alert';
 
 
 
@@ -58,7 +59,7 @@ export class AdministratorsComponent implements OnInit {
   filteredCounties: Observable<county[]> | undefined;
   filteredCities: Observable<city[]> | undefined;
   
-  constructor(private apiService: ApiService,public dialog: MatDialog) { }
+  constructor(private apiService: ApiService,public alert: MatAlert) { }
 
   adminForm = new FormGroup({
     name: new FormControl('',Validators.required),
@@ -66,8 +67,8 @@ export class AdministratorsComponent implements OnInit {
     surname: new FormControl('',Validators.required),
     login: new FormControl('',Validators.required),
     email: new FormControl('',Validators.email),
-    pesel: new FormControl('',Validators.required),
-    phone: new FormControl('',Validators.required),
+    pesel: new FormControl('',[Validators.required,Validators.minLength(11),Validators.maxLength(11)]),
+    phone: new FormControl('',[Validators.required,Validators.minLength(9),Validators.maxLength(9)]),
     permission: new FormControl('',Validators.required),
     facultyDto: new FormControl('',Validators.required),
     countryDto: new FormControl('',Validators.required),
@@ -89,8 +90,8 @@ export class AdministratorsComponent implements OnInit {
     surname: new FormControl('',Validators.required),
     login: new FormControl('',Validators.required),
     email: new FormControl('',Validators.email),
-    pesel: new FormControl('',Validators.required),
-    phone: new FormControl('',Validators.required),
+    pesel: new FormControl('',[Validators.required,Validators.minLength(11),Validators.maxLength(11)]),
+    phone: new FormControl('',[Validators.required,Validators.minLength(9),Validators.maxLength(9)]),
     permission: new FormControl('',Validators.required),
     facultyDto: new FormControl('',Validators.required),
     countryDto: new FormControl('',Validators.required),
@@ -168,18 +169,32 @@ export class AdministratorsComponent implements OnInit {
         data =>{
           if(data.status == 200)
             {
-              alert("Użytkownik zedytowany!")
+              this.alert.show('Sukces', 'Użytkonik zedytowany', {
+                buttonText: 'Ok',
+                buttonTheme: 'primary',
+                raisedButton: true,
+              })
             this.apiService.getAdmin().subscribe(
               data => {
                   this.dataSourceAdmins = data
               }
             )
             }
-          else
-            alert("Coś poszło nie tak")
+          
+          this.alert.show('Błąd', 'Coś poszło nie tak', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
+        },err=>{
+          this.alert.show('Błąd', 'Coś poszło nie tak', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
         }
       )
-      window.location.reload()
+      this.adminEditForm.reset()
     
 
   }
@@ -190,11 +205,26 @@ export class AdministratorsComponent implements OnInit {
       console.log(object)
       this.apiService.deleteAdmin(object.id).subscribe(
         data => {
-          console.log(data.status)
+          this.alert.show('Sukces', 'Użytkonik usunięty!', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
+        },err=>{
+          this.alert.show('Błąd', 'Coś poszło nie tak', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
+        }
+      )
+      this.apiService.getAdmin().subscribe(
+        data => {
+            this.dataSourceAdmins = data
         }
       )
     }
-    window.location.reload()
+    
   }
 
 

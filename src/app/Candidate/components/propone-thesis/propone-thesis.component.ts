@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatAlert } from '@lhn/mat-alert';
 import { ApiService } from 'src/app/_services/api.service';
 
 @Component({
@@ -51,10 +52,18 @@ export class ProponeThesisComponent implements OnInit {
     this.proponeForm.controls.thesisStatus.setValue("ADDED_STUDENT")
     console.log(this.proponeForm.value)
     this.api.proponeThesis(this.proponeForm.getRawValue()).subscribe(data =>{
-      alert("Praca została dodana!")
+      this.alert.show('Sukces', 'Praca została dodana!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.proponeForm.reset()
     },err =>{
-      alert("Cos poszlo nie tak")
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.proponeForm.reset()
     })
     this.proponeForm.controls.year.setValue(this.years[0])
@@ -63,7 +72,7 @@ export class ProponeThesisComponent implements OnInit {
   }
 
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private alert:MatAlert) { }
 
   ngOnInit(): void {
     this.api.getUser("LECTURER").subscribe(data =>{

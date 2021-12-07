@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatAlert } from '@lhn/mat-alert';
 import { ApiService } from 'src/app/_services/api.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class TicketsComponent implements OnInit {
 
   displayedColMyThesis: string[] = ['id', 'collaborator', 'description', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople','manage']
   dataSourceMyThesis: any
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private alert:MatAlert) { }
 
 
   public translateType(elem:any){
@@ -30,14 +31,22 @@ export class TicketsComponent implements OnInit {
     elem.thesisStatus = "ACCEPTED_LECTURER"
     this.api.updateThesis(elem).subscribe(data=>{
       if(data.status == 200)
-      alert("Zaakceptowano prace!")
+      this.alert.show('Sukces', 'Zaakceptowano pracę!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.api.getMyThesis().subscribe(data =>{
         this.dataSourceMyThesis = data.body
         this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus == "ADDED_STUDENT")
 
       })
     },err=>{
-      alert("Coś poszło nie tak")
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
     })
    }
     
@@ -49,16 +58,24 @@ export class TicketsComponent implements OnInit {
    {
     elem.thesisStatus = "REJECTED"
     this.api.updateThesis(elem).subscribe(data=>{
-      console.log(data)
+
       if(data.status == 200)
-      alert("Odrzucono prace!")
+      this.alert.show('Sukces', 'Odrzucono pracę!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.api.getMyThesis().subscribe(data =>{
         this.dataSourceMyThesis = data.body
         this.dataSourceMyThesis = this.dataSourceMyThesis.filter((elem: { thesisStatus: string; }) => elem.thesisStatus == "ADDED_STUDENT")
 
       })
     },err=>{
-      alert("Coś poszło nie tak")
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
     })
    }
   }

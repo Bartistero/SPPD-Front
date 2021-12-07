@@ -35,13 +35,12 @@ table {
     text-align: center;
 }
 
-mat-paginator{
+.mat-paginator{
     
     margin-top: 10px;
     margin-left:auto;
     margin-right:auto;
 }
-
 
 
 

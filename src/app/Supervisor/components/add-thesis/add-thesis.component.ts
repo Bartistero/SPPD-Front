@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatAlert } from '@lhn/mat-alert';
 import { ApiService } from 'src/app/_services/api.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
@@ -9,7 +10,7 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
   styleUrls: ['./add-thesis.component.css']
 })
 export class AddThesisComponent implements OnInit {
-  constructor(private api: ApiService,private jwt: TokenStorageService) { }
+  constructor(private api: ApiService,private jwt: TokenStorageService, private alert: MatAlert) { }
   public years: any
   public degrees: any
   public year = new Date().getFullYear()
@@ -49,16 +50,24 @@ export class AddThesisComponent implements OnInit {
    
   
     this.addThesisForm.controls.thesisStatus.setValue("ADDED_LECTURER")
-    console.log(this.addThesisForm.value)
     this.api.proponeThesis(this.addThesisForm.getRawValue()).subscribe(data =>{
-      alert("Praca została dodana!")
-      this.addThesisForm.reset()
+      this.alert.show('Sukces', 'Praca została dodana!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
+    
     },err =>{
-      alert("Cos poszlo nie tak")
-      console.log(err)
-      this.addThesisForm.reset()
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
+     
+      
 
     })
+    this.addThesisForm.reset()
     this.addThesisForm.controls.year.setValue(this.years[0])
     this.addThesisForm.controls.year.disable()
 

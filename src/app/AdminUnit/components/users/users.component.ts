@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatAlert } from '@lhn/mat-alert';
 
 
 @Component({
@@ -23,11 +24,11 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsersComponent implements OnInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
- 
+
   public status: any
   public i = 1
   public isUsers = true;
-  public isPag= true
+  public isPag = true
   public isUserForm = false;
   public isUserEditForm = false;
   public faculties: faculty[] = []
@@ -60,7 +61,7 @@ export class UsersComponent implements OnInit {
   filteredCounties: Observable<county[]> | undefined;
   filteredCities: Observable<city[]> | undefined;
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private alert: MatAlert) { }
 
   userForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -68,8 +69,8 @@ export class UsersComponent implements OnInit {
     surname: new FormControl('', Validators.required),
     login: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),
-    pesel: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
+    pesel: new FormControl('', [Validators.required,Validators.minLength(11),Validators.maxLength(11)]),
+    phone: new FormControl('', [Validators.required,Validators.minLength(9),Validators.maxLength(9)]),
     permission: new FormControl('', Validators.required),
     albumNumber: new FormControl(''),
     countryDto: new FormControl('', Validators.required),
@@ -91,8 +92,8 @@ export class UsersComponent implements OnInit {
     surname: new FormControl('', Validators.required),
     login: new FormControl('', Validators.required),
     email: new FormControl('', Validators.email),
-    pesel: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
+    pesel: new FormControl('', [Validators.required,Validators.minLength(11),Validators.maxLength(11)]),
+    phone: new FormControl('', [Validators.required,Validators.minLength(9),Validators.maxLength(9)]),
     permission: new FormControl('', Validators.required),
     albumNumber: new FormControl(''),
     countryDto: new FormControl('', Validators.required),
@@ -125,7 +126,7 @@ export class UsersComponent implements OnInit {
   }
 
   public edit(object: any) {
-    
+
     console.log(object)
     this.apiService.getCounty(object.voivodeshipDto.id).subscribe(data => {
       this.counties = data
@@ -178,8 +179,8 @@ export class UsersComponent implements OnInit {
     else
       this.userEditForm.controls.albumNumber.disable()
 
-      
-    
+
+
     this.userEditForm.controls.login.disable()
     this.userEditForm.controls.email.disable()
 
@@ -189,23 +190,32 @@ export class UsersComponent implements OnInit {
 
   }
 
-  
 
-  
+
+
 
   public delete(object: any) {
     if (confirm("Czy na pewno chcesz usunąć użytkownika " + object.name + " " + object.surname + "?")) {
-      console.log(object)
       this.apiService.deleteUser(object.id).subscribe(
         data => {
-          console.log(data.status)
+          this.alert.show('Sukces', 'Użytkonik usunięty', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
+        },err=>{
+          this.alert.show('Błąd', 'Coś poszło nie tak', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
         }
       )
     }
     window.location.reload()
   }
 
-  
+
 
   public showUsers() {
     this.isUsers = true;
@@ -233,7 +243,7 @@ export class UsersComponent implements OnInit {
   public setLogin() {
     let name = (this.userForm.controls.name.value).toLowerCase()
     let lastName = (this.userForm.controls.surname.value).toLowerCase()
-    let login = name+"."+lastName
+    let login = name + "." + lastName
     if (name && lastName) {
       this.apiService.isLoginValid(login).subscribe(data => {
         this.userForm.controls.login.setValue(name + "." + lastName)
@@ -261,7 +271,7 @@ export class UsersComponent implements OnInit {
   }
 
 
- 
+
 
 
   public userStyle() {
@@ -424,15 +434,15 @@ export class UsersComponent implements OnInit {
 
   }
 
-  public translatePermission(perName:string) {
-   
+  public translatePermission(perName: string) {
+
     if (perName == "Dyplomant")
       return "STUDENT"
-    else if(perName == "Promotor")
+    else if (perName == "Promotor")
       return "LECTURER"
-    else if(perName == "LECTURER")
+    else if (perName == "LECTURER")
       return "Promotor"
-    else 
+    else
       return "Dyplomant"
 
   }
@@ -443,46 +453,56 @@ export class UsersComponent implements OnInit {
     console.log(this.userForm.value)
     console.log(this.userForm.controls.albumNumber.value)
     console.log(this.userForm.getRawValue())
-    if(this.userForm.controls.streetDto.value == "")
+    if (this.userForm.controls.streetDto.value == "")
       this.userForm.controls.streetDto.setValue(null)
     this.apiService.addUser(this.userForm.value).subscribe(
       data => {
         if (data.status == 200) {
-          alert("Użytkownik został dodany!")
+          this.alert.show('Sukces', 'Użytkownik został dodany!', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
           this.apiService.getUser("LECTURER").subscribe(
             data => {
               this.dataSourceSupervisor = data
             }
-            
+
           )
           this.apiService.getUser("STUDENT").subscribe(data => {
             this.dataSourceCandidate = data
           })
-          window.location.reload()
+
         }
-        else
-          alert("Coś poszło nie tak")
-          this.userForm.reset()
+        this.userForm.reset()
+      }, err => {
+        this.alert.show('Błąd', 'Coś poszło nie tak', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
+        this.userForm.reset()
       }
     )
-    
+
 
   }
 
   public onSubmitUserEdit() {
     this.userEditForm.controls.permission.setValue(this.translatePermission(this.userEditForm.controls.permission.value))
     console.log(this.userEditForm.controls.login.value)
-    
+
 
 
     console.log(this.userEditForm.value)
     this.apiService.editUser(this.userEditForm.getRawValue()).subscribe(
       data => {
         if (data.status == 200) {
-          if(confirm("Użytkownik został zedytowany!"))
-            window.location.reload()
-          else
-            window.location.reload()
+          this.alert.show('Sukces', 'Użytkownik został zedytowany!', {
+            buttonText: 'Ok',
+            buttonTheme: 'primary',
+            raisedButton: true,
+          })
 
           this.apiService.getUser("LECTURER").subscribe(
             data => {
@@ -492,13 +512,21 @@ export class UsersComponent implements OnInit {
           this.apiService.getUser("STUDENT").subscribe(data => {
             this.dataSourceCandidate = data
           })
-          
+
         }
-        else
-          alert("Coś poszło nie tak")
+        this.userEditForm.reset()
+
+
+      }, err => {
+        this.alert.show('Błąd', 'Coś poszło nie tak', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
+        this.userEditForm.reset()
       }
     )
-   
+
 
   }
 
@@ -567,8 +595,8 @@ export class UsersComponent implements OnInit {
     this.userForm.controls.albumNumber.disable()
 
     this.apiService.getUser("LECTURER").subscribe(data => {
-    this.dataSourceSupervisor = new MatTableDataSource(data)
-    this.dataSourceSupervisor.paginator = this.paginator.toArray()[0];
+      this.dataSourceSupervisor = new MatTableDataSource(data)
+      this.dataSourceSupervisor.paginator = this.paginator.toArray()[0];
     })
 
     this.apiService.getUser("STUDENT").subscribe(data => {
@@ -594,12 +622,12 @@ export class UsersComponent implements OnInit {
 
 
 
-/*
-    this.filteredFaculties = this.userEditForm.controls['facultyDto'].valueChanges.pipe(
-      startWith(''),
-      map(faculty => faculty ? this._filterFaculty(faculty) : this.faculties.slice())
-    );
-*/
+    /*
+        this.filteredFaculties = this.userEditForm.controls['facultyDto'].valueChanges.pipe(
+          startWith(''),
+          map(faculty => faculty ? this._filterFaculty(faculty) : this.faculties.slice())
+        );
+    */
     this.filteredBoroughs = this.userEditForm.controls['boroughDto'].valueChanges.pipe(
       startWith(''),
       map(borough => borough ? this._filterBorough(borough) : this.boroughs.slice())
@@ -637,7 +665,7 @@ export class UsersComponent implements OnInit {
   }
   ngAfterViewInit() {
     this.dataSourceSupervisor.paginator = this.paginator.toArray()[0];
-   
+
 
     this.dataSourceCandidate.paginator = this.paginator.toArray()[1];
 

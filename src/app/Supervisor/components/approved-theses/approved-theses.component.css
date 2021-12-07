@@ -74,7 +74,6 @@ table {
 
 @media  (max-width: 710px) {
     td.mat-cell,th.mat-header-cell {
-    color: red;
     font-size: 10px;
     }
     
@@ -82,7 +81,6 @@ table {
 
 @media  (max-width: 550px) {
     td.mat-cell,th.mat-header-cell {
-    color: green;
     font-size: 7px;
     text-align: center;
     padding:2px;
@@ -95,7 +93,6 @@ table {
 
 @media  (max-width: 420px) {
     td.mat-cell,th.mat-header-cell {
-    color: green;
     font-size: 6px;
     text-align: center;
     padding:2px;
@@ -112,5 +109,12 @@ table {
     
 }
 
+
+.mat-paginator{
+    
+    margin-top: -30px;
+    margin-left:auto;
+    margin-right:auto;
+}
 
 

@@ -273,9 +273,9 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput placeholder="Pesel" required formControlName="pesel">
-                <mat-error *ngIf="adminEditForm.get('pesel')?.invalid && adminEditForm.get('pesel')?.touched">Pole pesel
-                    nie moze byc puste</mat-error>
+                <input matInput placeholder="Pesel" required formControlName="pesel" minlength="11" maxlength="11">
+                <mat-error *ngIf="adminEditForm.get('pesel')?.invalid && adminEditForm.get('pesel')?.touched">Pole
+                    pesel nie moze byc puste i musi zawierać 11 znaków</mat-error>
 
             </mat-form-field>
 
@@ -291,9 +291,9 @@
 
 
             <mat-form-field>
-                <input matInput placeholder="Telefon" required formControlName="phone">
+                <input matInput placeholder="Telefon" required formControlName="phone"  minlength="9" maxlength="9">
                 <mat-error *ngIf="adminEditForm.get('phone')?.invalid && adminEditForm.get('phone')?.touched">Pole
-                    telefon nie moze byc puste</mat-error>
+                    telefon nie moze byc puste i musi zawierać 9 znakow</mat-error>
 
             </mat-form-field>
 

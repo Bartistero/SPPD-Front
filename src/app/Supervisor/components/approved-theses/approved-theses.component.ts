@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/_services/api.service';
 
 @Component({
@@ -7,6 +9,7 @@ import { ApiService } from 'src/app/_services/api.service';
   styleUrls: ['./approved-theses.component.css']
 })
 export class ApprovedThesesComponent implements OnInit {
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
 
   displayedColApprovedThesis: string[] = ['id',  'description','degreeCourseDto', 'lecturer', 'thesisName', 'thesisStatus', 'typeOfThesis', 'year','amountPeople']
   dataSourceApprovedThesis: any
@@ -39,11 +42,17 @@ export class ApprovedThesesComponent implements OnInit {
   ngOnInit(): void {
     this.api.getAllThesis("ACCEPTED_FACULTY").subscribe(data => {
 
-      this.dataSourceApprovedThesis = data.body
-      console.log(this.dataSourceApprovedThesis)
+      this.dataSourceApprovedThesis = new MatTableDataSource(data.body)
+   
+      
     },err=>{
       console.log(err)
     })
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSourceApprovedThesis.paginator = this.paginator.toArray()[0];
 
   }
 
