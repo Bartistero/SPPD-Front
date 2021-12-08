@@ -4,7 +4,7 @@
 </div>
 <div fxLayoutAlign="center ">
     <mat-card id="cont" fxFlex="50" [style.display]="newAdminStyle()">
-        <mat-toolbar color="primary">Dodaj użytkownika</mat-toolbar>
+        <mat-toolbar color="primary">Dodaj administratora</mat-toolbar>
         <form fxLayout="column" class="login-form" [formGroup]="adminForm" (ngSubmit)='onSubmitAdmin()'>
             <mat-form-field>
                 <input matInput placeholder="Imie" required formControlName="name" (change)="nameChange()">
@@ -35,7 +35,7 @@
 
             <mat-form-field>
                 <input matInput placeholder="Email" required formControlName="email">
-                <mat-error *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched">Pole nazwisko nie
+                <mat-error *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched">Pole email nie
                     moze byc puste</mat-error>
 
 
@@ -44,8 +44,7 @@
             <mat-form-field>
                 <input matInput placeholder="Pesel" required formControlName="pesel">
                 <mat-error *ngIf="adminForm.get('pesel')?.invalid && adminForm.get('pesel')?.touched">Pole pesel nie
-                    moze byc puste</mat-error>
-
+                    moze byc puste i musi zawierać 11 znaków</mat-error>
             </mat-form-field>
 
 
@@ -62,7 +61,7 @@
             <mat-form-field>
                 <input matInput placeholder="Telefon" required formControlName="phone">
                 <mat-error *ngIf="adminForm.get('phone')?.invalid && adminForm.get('phone')?.touched">Pole telefon nie
-                    moze byc puste</mat-error>
+                    moze byc puste i msui zawierać 9 znaków</mat-error>
 
             </mat-form-field>
 
@@ -267,7 +266,7 @@
             <mat-form-field>
                 <input matInput placeholder="Email" required formControlName="email">
                 <mat-error *ngIf="adminEditForm.get('email')?.invalid && adminEditForm.get('email')?.touched">Pole
-                    nazwisko nie moze byc puste</mat-error>
+                    email nie moze byc puste</mat-error>
 
 
             </mat-form-field>
@@ -406,7 +405,7 @@
 
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="!adminEditForm.valid">Dodaj</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!adminEditForm.valid">Edytuj</button>
         </form>
     </mat-card>
 </div>

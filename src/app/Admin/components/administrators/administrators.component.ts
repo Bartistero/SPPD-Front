@@ -169,7 +169,7 @@ export class AdministratorsComponent implements OnInit {
         data =>{
           if(data.status == 200)
             {
-              this.alert.show('Sukces', 'Użytkonik zedytowany', {
+              this.alert.show('Sukces', 'Użytkownik zedytowany', {
                 buttonText: 'Ok',
                 buttonTheme: 'primary',
                 raisedButton: true,
@@ -181,11 +181,7 @@ export class AdministratorsComponent implements OnInit {
             )
             }
           
-          this.alert.show('Błąd', 'Coś poszło nie tak', {
-            buttonText: 'Ok',
-            buttonTheme: 'primary',
-            raisedButton: true,
-          })
+         
         },err=>{
           this.alert.show('Błąd', 'Coś poszło nie tak', {
             buttonText: 'Ok',
@@ -205,7 +201,7 @@ export class AdministratorsComponent implements OnInit {
       console.log(object)
       this.apiService.deleteAdmin(object.id).subscribe(
         data => {
-          this.alert.show('Sukces', 'Użytkonik usunięty!', {
+          this.alert.show('Sukces', 'Użytkownik usunięty!', {
             buttonText: 'Ok',
             buttonTheme: 'primary',
             raisedButton: true,
@@ -455,19 +451,30 @@ export class AdministratorsComponent implements OnInit {
       data =>{
         if(data.status == 200)
           {
-            alert("Administrator został dodany!")
+            this.alert.show('Sukces', 'Administrator został dodany!', {
+              buttonText: 'Ok',
+              buttonTheme: 'primary',
+              raisedButton: true,
+            })
           this.apiService.getAdmin().subscribe(
             data => {
                 this.dataSourceAdmins = data
             }
           )
           }
-        else
-          alert("Coś poszło nie tak")
+        
+       
+      },err=>{
+        this.alert.show('Błąd', 'Coś poszło nie tak', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
+
       }
     )
     this.adminForm.reset()
-    window.location.reload()
+    
   }
 
   _filter(val: string): country[] {

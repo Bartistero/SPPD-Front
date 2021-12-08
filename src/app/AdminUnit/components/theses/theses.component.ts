@@ -51,7 +51,7 @@ export class ThesesComponent implements OnInit {
       element.thesisStatus = "ACCEPTED_FACULTY"
       this.api.updateThesis(element).subscribe(data => {
         if (data.status == 200) {
-          this.alert.show('Sukces', 'zaakceptowano pracę!', {
+          this.alert.show('Sukces', 'Zaakceptowano pracę!', {
             buttonText: 'Ok',
             buttonTheme: 'primary',
             raisedButton: true,
@@ -109,8 +109,16 @@ export class ThesesComponent implements OnInit {
           buttonTheme: 'primary',
           raisedButton: true,
         })
-        this.api.getAllThesis("ACCEPTED_LECTURER").subscribe(data => {
-          this.dataSourceThesis = data.body
+        this.api.getAllThesis("ACCEPTED_FACULTY").subscribe(data => {
+
+          this.dataSourceApprovedThesis = new MatTableDataSource(data.body)
+        })
+
+        this.api.getAllThesis("ARCHIVED").subscribe(data => {
+
+
+          this.dataSourceArchivedThesis = new MatTableDataSource(data.body)
+         
         })
       }, err => {
         this.alert.show('Błąd', 'Coś poszło nie tak', {

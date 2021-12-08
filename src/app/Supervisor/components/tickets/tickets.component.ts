@@ -26,7 +26,7 @@ export class TicketsComponent implements OnInit {
   }
 
   public accept(elem: any){
-   if(confirm("Czy na pewno chcesz zaakceptować propozycję pracy?"))
+   if(confirm("Czy na pewno chcesz zaakceptować propozycję pracy "+elem.thesisName+" ?"))
    {
     elem.thesisStatus = "ACCEPTED_LECTURER"
     this.api.updateThesis(elem).subscribe(data=>{
