@@ -10,8 +10,8 @@
                         {{ supervisor.name}} {{supervisor.surname}}
                     </mat-option>
                 </mat-select>
-                <mat-error *ngIf="proponeForm.get('supervisor')?.invalid && proponeForm.get('supervisor')?.touched">
-                    Pole uprawnienia nie moze byc puste</mat-error>
+                <mat-error *ngIf="proponeForm.get('lecturer')?.invalid && proponeForm.get('lecturer')?.touched">
+                    Proszę wybrać promotora pracy </mat-error>
             </mat-form-field>
         
             <mat-form-field>

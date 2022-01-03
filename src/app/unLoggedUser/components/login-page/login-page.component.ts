@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAlert } from '@lhn/mat-alert';
 import { AuthService } from 'src/app/_services/auth.service';
-import { CookieService } from 'src/app/_services/cookie.service';
+
 import { LocalStorageService } from 'src/app/_services/local-storage.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
@@ -22,7 +22,8 @@ export class LoginPageComponent implements OnInit {
   public data: any
   public error = ""
 
-  constructor(private alert: MatAlert, private localStorage: LocalStorageService, private authService: AuthService, private tokenStorage: TokenStorageService, private cookieService: CookieService, private router: Router) { }
+  constructor(private alert: MatAlert, private localStorage: LocalStorageService, private authService: AuthService, 
+    private tokenStorage: TokenStorageService, private router: Router) { }
 
   onSubmit() {
     let credentials = {

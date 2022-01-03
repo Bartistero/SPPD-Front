@@ -41,8 +41,7 @@ data: {
   permission: 'LECTURER'
 },
 loadChildren: () => import('./Supervisor/supervisor.module').then((m) => m.SupervisorModule)},
-{path:"**",component:PageNotFoundComponent}
-];
+{path:"**",component:PageNotFoundComponent}];
 
 
  
