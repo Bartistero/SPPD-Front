@@ -1,1 +1,66 @@
-<p>approved-theses works!</p>
+<div class="spacer"></div>
+<div fxLayoutAlign="center" ><h1>Zatwierdzone prace</h1></div>
+<div fxLayoutAlign="center" >
+   
+    
+    <table mat-table [dataSource]="dataSourceApprovedThesis" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="typeOfThesis">
+            <th mat-header-cell *matHeaderCellDef> Typ pracy </th>
+            <td mat-cell *matCellDef="let element"> {{translateType(element.typeOfThesis)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="thesisName">
+            <th mat-header-cell *matHeaderCellDef> Nazwa pracy </th>
+            <td mat-cell *matCellDef="let element"> {{element.thesisName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Opis </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lecturer">
+            <th mat-header-cell *matHeaderCellDef> Promotor </th>
+            <td mat-cell *matCellDef="let element"> {{element.lecturer.name}} {{element.lecturer.surname}} </td>
+        </ng-container>
+
+       
+
+        <ng-container matColumnDef="thesisStatus">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{translateStatus(element.thesisStatus)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef> Rok</th>
+            <td mat-cell *matCellDef="let element"> {{element.year.year}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="degreeCourseDto">
+            <th mat-header-cell *matHeaderCellDef> Kierunek</th>
+            <td mat-cell *matCellDef="let element"> {{element.degreeCourseDto.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="amountPeople">
+            <th mat-header-cell *matHeaderCellDef> Max</th>
+            <td mat-cell *matCellDef="let element"> {{element.amountPeople}}  </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColApprovedThesis"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColApprovedThesis;" ></tr>
+    </table>
+</div>
+    <div fxLayoutAlign="center " >
+        <mat-paginator  [length]="dataSourceApprovedThesis.length" [pageSize]="5" [pageSizeOptions]="[1,5, 10, 25, 100]" aria-label="Wybierz strone" >
+        </mat-paginator>
+    </div>
+    
+    <div class="spacer"></div>

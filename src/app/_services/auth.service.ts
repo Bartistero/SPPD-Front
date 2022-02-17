@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CookieService } from './cookie.service';
+
 import { LocalStorageService } from './local-storage.service';
 import { Router } from '@angular/router';
 import { MatAlert } from '@lhn/mat-alert';
@@ -24,7 +24,7 @@ export class AuthService {
   
   
 
-  constructor(private http: HttpClient,private cookieService: CookieService,
+  constructor(private http: HttpClient,
     private localStorage: LocalStorageService, private router: Router,private alert:MatAlert)  { }
 
   login(credentials:any): Observable<any> {

@@ -101,7 +101,7 @@ export class ApiService {
   deleteUser(id: number): Observable<any>{
     let param = new HttpParams();
     param = param.set('id',id)
-    return this.http.get(API_URL+'user/delete',{params: param})
+    return this.http.get(API_URL+'user/delete',{params: param, observe:"response"})
   }
 
 
@@ -128,6 +128,58 @@ export class ApiService {
   unlockAccount(user: any): Observable<any>{
     return this.http.post(API_URL+"login/block-user",user,{observe: "response"})
   }
+
+  getYear():Observable<any>{
+    return this.http.get(API_URL+"year",{observe:"response"})
+  }
+
+
+  getMyThesis():Observable<any>{
+    return this.http.get(API_URL+"thesis/my-thesis",{observe:"response"})
+  }
+
+  proponeThesis(thesis: any){
+    return this.http.post(API_URL+"thesis",thesis, {observe:"response"})
+  }
+
+  getAllThesis(param:string):Observable<any>{
+    if(param == "ACCEPTED"){
+      return this.http.get(API_URL+"thesis",{observe:"response"})
+    }else
+    {
+      let params = new HttpParams();
+      params = params.set('thesisStatus',param)
+  
+      return this.http.get(API_URL+"thesis",{params:params, observe:"response"})
+    }
+    
+  }
+
+  saveOnThesis(lecturerDto:any,id:number):Observable<any>{
+    console.log(lecturerDto)
+    let params = new HttpParams();
+    params = params.set('idThesis',id)
+    return this.http.post(API_URL+"thesis/new-collaborators",lecturerDto,{params:params, observe:"response"})
+  }
+
+  updateThesis(elem:any):Observable<any>{
+    return this.http.post(API_URL+"thesis/update",elem,{observe:"response"})
+  }
+
+  getCountUsers(permission: string):Observable<any>{
+    let params = new HttpParams()
+    params = params.set("permission",permission)
+    return this.http.get(API_URL+"static/person",{params:params})
+  }
+
+  getCountThesis(status: string):Observable<any>{
+    let params = new HttpParams()
+    params = params.set("status",status)
+    return this.http.get(API_URL+"static/thesis",{params:params})
+  }
+
+
+
   
 
   

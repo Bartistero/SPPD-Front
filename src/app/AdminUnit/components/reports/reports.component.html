@@ -1,1 +1,40 @@
-<p>reports works!</p>
+<div class="spacer"></div>
+<div fxLayoutAlign="center" ><h1>Statystyki wydziału</h1></div>
+<div fxLayoutAlign="center" >
+   
+    
+    <table mat-table [dataSource]="dataSourceReport" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="supervisorsAmount">
+            <th mat-header-cell *matHeaderCellDef> Liczba promotorów </th>
+            <td mat-cell *matCellDef="let element"> {{element.supervisorsAmount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="candidatesAmount">
+            <th mat-header-cell *matHeaderCellDef> Liczba dyplomantów </th>
+            <td mat-cell *matCellDef="let element"> {{element.candidatesAmount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="approvedAmount">
+            <th mat-header-cell *matHeaderCellDef> Liczba zatwierdzonych tematów </th>
+            <td mat-cell *matCellDef="let element"> {{element.approvedAmount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lecturerAddedAmount">
+            <th mat-header-cell *matHeaderCellDef> Liczba tematów dodanych przez promotorów </th>
+            <td mat-cell *matCellDef="let element"> {{element.lecturerAddedAmount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="studentAddedAmount">
+            <th mat-header-cell *matHeaderCellDef> Liczba tematów dodanych przez studentów </th>
+            <td mat-cell *matCellDef="let element"> {{element.studentAddedAmount}} </td>
+        </ng-container>
+
+       
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColReport"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColReport;" ></tr>
+    </table>
+    <div class="spacer"></div>
+</div>

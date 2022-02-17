@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
-import { CookieService } from '../_services/cookie.service';
 import { LocalStorageService } from '../_services/local-storage.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
@@ -13,8 +12,7 @@ export class UnLoggedGuard implements CanActivate {
   constructor(private loginService: AuthService,
     private localStorage: LocalStorageService,
     private jwtService: TokenStorageService,
-    private route: Router,
-    private cookieService: CookieService) {
+    private route: Router) {
 }
 canActivate(
 next: ActivatedRouteSnapshot,
@@ -32,18 +30,12 @@ state: RouterStateSnapshot): boolean {
         this.route.navigate(['supervisor/approvedTheses'])
       else
         this.route.navigate(['candidate/approvedTheses'])
-
       return false
 
     }
   }
-    
   else
-  {
-    
     return true
-  }
-    
 }
   
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/_services/api.service';
 import { course } from 'src/app/shared/models/course';
+import { MatAlert } from '@lhn/mat-alert';
 
 @Component({
   selector: 'app-faculties',
@@ -18,19 +19,27 @@ export class FacultiesComponent implements OnInit {
   public dataSourceCourse:any
   
   
-    constructor(private apiService: ApiService) { 
+    constructor(private apiService: ApiService, private alert:MatAlert) { 
     }
   
     public onSubmitCourse(){
       this.apiService.addCourse(this.courseForm.value).subscribe(data =>{
-        alert("Dodano kierunek")
+        this.alert.show('Sukces', 'Dodano kierunek', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
         this.apiService.getCourse().subscribe(
           data => {
               this.dataSourceCourse = data
           }
         )
       },err =>{
-        alert("Coś poszło nie tak")
+        this.alert.show('Błąd', 'Coś poszło nie tak', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
       })
       this.courseForm.reset()
     }
@@ -38,14 +47,22 @@ export class FacultiesComponent implements OnInit {
     public onSubmitEditCourse(){
       console.log(this.editCourseForm.value)
       this.apiService.editCourse(this.editCourseForm.value).subscribe(data =>{
-        alert("Zedytowano kierunek")
+        this.alert.show('Sukces', 'Zedytowano kierunek', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
         this.apiService.getCourse().subscribe(
           data => {
               this.dataSourceCourse = data
           }
         )
       },err =>{
-        alert("Coś poszło nie tak")
+        this.alert.show('Błąd', 'Coś poszło nie tak', {
+          buttonText: 'Ok',
+          buttonTheme: 'primary',
+          raisedButton: true,
+        })
       })
       this.editCourseForm.reset()
       

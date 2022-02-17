@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
 <div class="spacer"></div>
 <div fxLayoutAlign="center " >
-    <mat-card fxFlex="30" class="login-card">
-        <mat-toolbar color="primary">Zaloguj się</mat-toolbar>
+    <mat-card fxFlex="40" class="login-card">
+        <mat-toolbar color="primary" id="tool">Zaloguj się</mat-toolbar>
         
         <form  (ngSubmit)='onSubmit()' fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="loginForm" >
             

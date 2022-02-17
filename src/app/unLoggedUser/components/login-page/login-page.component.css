@@ -1,3 +1,19 @@
 .spacer{
     height:100px;
 }
+
+@media (max-width:510px){
+    #tool{
+        font-size: 15px;
+    }
+    .mat-error{
+        margin:1px;
+    }
+}
+
+@media (max-width:410px){
+    #tool{
+        font-size: 11px;
+        padding-left: 2px;
+    }
+}

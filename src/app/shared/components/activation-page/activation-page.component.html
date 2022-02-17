@@ -9,7 +9,7 @@
 </div>
 <div fxLayoutAlign="center " *ngIf="!status">
     <mat-card id="cont" fxFlex="50">
-        <mat-toolbar color="primary">Ustaw hasło dostępu</mat-toolbar>
+        <mat-toolbar color="primary" id="tool">Ustaw hasło dostępu</mat-toolbar>
         <form fxLayout="column" class="login-form" [formGroup]="activationForm" (ngSubmit)='onSubmitActivate()'>
             <mat-form-field>
                 <input matInput type="password" placeholder="hasło" [errorStateMatcher]="matcher" required formControlName="password" (change)="passwordChange()">

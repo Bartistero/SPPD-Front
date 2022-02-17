@@ -6,3 +6,12 @@ mat-toolbar{
 .spacer{
     height:50px;
 }
+
+@media  (max-width: 710px) {
+    mat-toolbar{
+        font-size: 15px;
+        position: fixed;
+        bottom: 0;
+    }
+    
+}

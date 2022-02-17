@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAlert } from '@lhn/mat-alert';
 import { faculty } from 'src/app/shared/models/faculty';
 import { ApiService } from 'src/app/_services/api.service';
 
@@ -18,19 +19,27 @@ public displayedColFaculty: string[] = ['id','name','edit']
 public dataSourceFaculty:any
 
 
-  constructor(private apiService: ApiService) { 
+  constructor(private apiService: ApiService,private alert:MatAlert) { 
   }
 
   public onSubmitFaculty(){
     this.apiService.addFaculty(this.facultyForm.value).subscribe(data =>{
-      alert("Dodano wydzial")
+      this.alert.show('Sukces', 'Dodano wydział!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.apiService.getFaculty().subscribe(
         data => {
             this.dataSourceFaculty = data
         }
       )
     },err =>{
-      alert("Coś poszło nie tak")
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
     })
     this.facultyForm.reset()
   }
@@ -38,14 +47,22 @@ public dataSourceFaculty:any
   public onSubmitEditFaculty(){
     console.log(this.editFacultyForm.value)
     this.apiService.editFaculty(this.editFacultyForm.value).subscribe(data =>{
-      alert("Zedytowano wydzial")
+      this.alert.show('Sukces', 'Zedytowano wydział!', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
       this.apiService.getFaculty().subscribe(
         data => {
             this.dataSourceFaculty = data
         }
       )
     },err =>{
-      alert("Coś poszło nie tak")
+      this.alert.show('Błąd', 'Coś poszło nie tak', {
+        buttonText: 'Ok',
+        buttonTheme: 'primary',
+        raisedButton: true,
+      })
     })
     this.editFacultyForm.reset()
     

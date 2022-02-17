@@ -11,9 +11,10 @@ export class UniversalAppInterceptorService implements HttpInterceptor{
   constructor(private loginService: AuthService, private api: ApiService,private tokenStorage: TokenStorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const re = /login/gi;
+    
     const re2 = /check/gi;
     const re3 = /block-user/gi;
+    const re = /login/gi;
     
     const token = this.tokenStorage.getToken()
     

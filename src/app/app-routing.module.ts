@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivationPageComponent } from './shared/components/activation-page/activation-page.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { AboutComponent } from './unLoggedUser/components/about/about.component';
 import { ApprovedThesisesComponent } from './unLoggedUser/components/approved-thesises/approved-thesises.component';
 import { LoginPageComponent } from './unLoggedUser/components/login-page/login-page.component';
@@ -12,8 +13,6 @@ const routes: Routes = [
 { path: '', redirectTo: 'about', pathMatch: 'full' },
 {path:'email/activate', component:ActivationPageComponent,canActivate: [UnLoggedGuard]},
 { path: 'about', component: AboutComponent,canActivate: [UnLoggedGuard]
-},
-{ path: 'approvedThesises', component: ApprovedThesisesComponent,canActivate: [UnLoggedGuard]
 },
 
 { path: 'login', component: LoginPageComponent,canActivate: [UnLoggedGuard]
@@ -42,7 +41,7 @@ data: {
   permission: 'LECTURER'
 },
 loadChildren: () => import('./Supervisor/supervisor.module').then((m) => m.SupervisorModule)},
-];
+{path:"**",component:PageNotFoundComponent}];
 
 
  
